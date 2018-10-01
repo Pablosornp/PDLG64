@@ -1,0 +1,25 @@
+S  --> del S | d E | 'C | l I | / N | = D | : D1 | + | - D2 | & J | '|' K | * | [ | ] | ; | , | ! D3 | < D4 | D5 >     
+C  --> \ C' | oc1 C | '
+C' --> 't' C | 'n' C | ' C | " C | \ C
+D  --> = | λ 
+D1 --> = | λ
+D2 --> = | λ
+D3 --> = | λ 
+D4 --> = | λ 
+D5 --> = | λ  
+E  --> d E | λ                
+I  --> l I | d I | _ I | λ
+J  --> &
+K  --> '|'
+N  --> * N' | λ				 
+N' --> * N'' | oc2 N' 
+N''--> * N'' | / S | oc3 N'
+
+
+
+del={esp,tab,eol}
+d = {0..9}
+l = {a..z, A..Z}
+oc1 = {cualquier caracter imprimible} - {\}
+oc2 = {cualquier caracter imprimible} - {*}
+oc3 = {cualquier caracter imprimible} - {/,*}
