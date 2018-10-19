@@ -22,8 +22,12 @@
 * <OP_sal, - > (print (c))
 * <OP-en, - > (promt (c))
 * <OP_MAY, - > (>)
-* <OP_MEN, - > (<)
-* <OP_IG, - > (=)
+* <OP_MEN, - > (<) 
+* <OP_MEN_IG, - > (<=)
+* <OP_MAY_IG, - > (>=)
+* <OP_IG, - > (==)
+* <OP_DISTINTO,- > (!=)
+* <Dos_puntos, - > (:)
 * <PR, 1 > (int)
 * <PR, 2 > (bool)
 * <PR, 3 > (string)
@@ -35,4 +39,7 @@
 * <PR, 9 > (var)
 * <PR, 10 > (switch)
 * <PR, 11 > (case)
+* <PR, 12 > (print)
+* <PR, 13 > (promt)
 * <Id, ptr_ts>
+// eliminar del automata :=
