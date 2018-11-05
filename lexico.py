@@ -7,7 +7,7 @@ import re
 reservadas = ['INT','BOOL','STRING','IF','DEFAULT','BREAK','RETURN','FUNCTION','VAR','SWITCH','CASE','PRINT','PROMT']
 
 #Tokens
-tokens = reservadas + ['ID','ENT','CAD','MAS','MENOS','MUL','DIV','AND','LLAVA','LLAVC','PARA','PARC',
+tokens = reservadas + ['ID','ENT','CAD','MAS','MENOS','MUL','DIV','LLAVA','LLAVC','PARA','PARC',
 						'CORA','CORC','FIN','SIG','OR','AND','NOT','ASIG_R','ASIG','OP_MAY','OP_MEN',
 						'OP_IG','OP_MAY_IG','OP_MEN_IG']
 
@@ -47,7 +47,7 @@ t_OP_MEN = r'<'
 #Funciones
 
 def t_ID(c):
-	r'[a-zA-Z_]+(_\d\w)*'
+	r'[a-zA-Z_]+[a-zA-Z_0-9]*'
 	return c
 
 def t_ENT(c):
@@ -108,12 +108,12 @@ def t_PROMPT(c):
 	return c
 
 def t_error(t):
-	print "caracter ilegal '%s'" % t.value[0]
+	print ("caracter ilegal '%s'" % t.value[0])
 	t.lexer.skip(1)
 
 analizador = lex.lex()
 
-nombreFichero = raw_input("Inserta nombre de fichero:")
+nombreFichero = input("Inserta nombre de fichero:")
 handle = open(nombreFichero)
 cadena =handle.read()
 analizador.input(cadena)
@@ -123,4 +123,4 @@ while True:
 	if not tok :
 		print("Token erroneo:",tok)
 		break
- 	print tok
+	print(tok)
