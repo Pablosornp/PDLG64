@@ -1,0 +1,159 @@
+Prueba 1:
+
+var int i = 12;
+/*Comentario*/
+switch(i){
+	case(0): num-=2;break;
+	default:num=num+2;
+}
+
+TOKENS:
+<PR, 9 > // var
+<PR, 1 > // int
+<Id, ptr_ts> // i
+<Asig, - > // =
+<Ent,12> // 12
+<PR, 10 > // switch
+<PARA, -> // ( 
+<Id, ptr_ts> // i
+<PARC, -> // )
+<LLAVA, -> // {
+<PR, 11 > //case
+<PARA, -> // ( 
+<Ent,0> // 0
+<PARC, -> // )
+<Dos_puntos, - > // :
+<Id, ptr_ts> // num
+<Asig_R, -> // -=
+<Ent,2> // 2
+<FIN, - > // ;
+<PR, 6 > // break
+<FIN, - > // ;
+<PR, 5 > // default
+<Dos_puntos, - > // :
+<Id, ptr_ts> // num
+<Asig, - > // =
+<Id, ptr_ts> // num
+<Mas, -> // +
+<Ent,2> // 2
+<FIN, - > // ;
+<LLAVC, -> // }
+
+Tabla de Simbolos:
+
+#1:
+*'i'
+*'num'
+------------------------------------------------
+Prueba 2:
+
+if (a ==2)
+	print('texto');
+if(b<33333 || c>=1)
+	b=c-1;
+	a=b*c/3;
+bool l = a<=4 && c>b;
+
+TOKENS:
+<PR, 4 > // if
+<PARA, -> // ( 
+<Id, ptr_ts> // a
+<OP_IG, - > // ==
+<Ent,2> // 2
+<PARC, -> // )
+<PR, 12 > // print
+<PARA, -> // ( 
+<CAD, texto> // 'texto'
+<PARC, -> // )
+<FIN, - > // ;
+<PR, 4 > // if
+<PARA, -> // ( 
+<Id, ptr_ts> // b
+<OP_MEN, - > // <
+<Ent,33333> // ERROR
+<OR, -> // ||
+<Id, ptr_ts> // c
+<OP_MAY_IG, - > // >=
+<Ent,1> // 1
+<PARC, -> // )
+<Id, ptr_ts> // b
+<Asig, - > // =
+<Id, ptr_ts> // c
+<Menos, -> // -
+<Ent,1> // 1
+<FIN, - > // ;
+<Id, ptr_ts> // a
+<Asig, - > // =
+<Id, ptr_ts> // b
+<MUL, -> // *
+<Id, ptr_ts> // c
+<DIV, -> // /
+<Ent,3> // 3
+<FIN, - > // ;
+<PR, 2 > // bool
+<Id, ptr_ts> // l
+<Asig, - > // =
+<Id, ptr_ts> // a
+<OP_MEN_IG, - > // <=
+<Ent,4> // 4
+<AND, -> // &&
+<Id, ptr_ts> // c
+<OP_MAY, - > // >
+<Id, ptr_ts> // b
+<FIN, - > // ;
+
+Tabla de Simbolos:
+
+#1:
+*'a'
+*'b'
+*'c'
+*'l'
+-------------------------------------------------
+Prueba 3:
+
+if (!(z!=false)){
+	string c = prompt();
+	b=c;
+}
+bool b,d=true;
+
+TOKENS:
+<PR, 4 > // if
+<PARA, -> // ( 
+<NOT, -> // ! 
+<PARA, -> // ( 
+<Id, ptr_ts> // z
+<OP_DISTINTO,- > // !=
+<Bool, false > // false
+<PARC, -> // )
+<PARC, -> // )
+<PARC, -> // )
+<LLAVA, -> // {
+<PR, 3 > // string
+<Id, ptr_ts> // c
+<Asig, - > // =
+<PR, 13 > // prompt
+<PARA, -> // ( 
+<PARC, -> // )
+<FIN, - > // ;
+<Id, ptr_ts> // b
+<Asig, - > // =
+<Id, ptr_ts> // c
+<FIN, - > // ;
+<LLAVC, -> // }
+<PR, 2 > // bool
+<Id, ptr_ts> // b
+<SIG, - > // , 
+<Id, ptr_ts> // d
+<Asig, - > // =
+<Bool, true > // true
+<FIN, - > // ;
+
+Tabla de Simbolos:
+
+#1:
+*'z'
+*'c'
+*'b'
+*'d'

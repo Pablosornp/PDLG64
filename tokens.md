@@ -40,6 +40,6 @@
 * <PR, 10 > (switch)
 * <PR, 11 > (case)
 * <PR, 12 > (print)
-* <PR, 13 > (promt)
+* <PR, 13 > (prompt)
+
 * <Id, ptr_ts>
-// eliminar del automata :=
