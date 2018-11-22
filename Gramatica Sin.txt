@@ -7,7 +7,7 @@ Axioma = P
 Producciones = {
 P -> B P
 P -> F P
-B -> var T id ;
+B -> var A ;
 B -> if ( E ) S
 B -> while ( E ) { C }
 B -> switch ( E ) { D }

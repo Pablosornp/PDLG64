@@ -8,7 +8,7 @@ FIRST de A -> T id K  =  { String bool int }
 FIRST de A -> lambda  =  { lambda }
 FIRST de A  =  { String bool int lambda }
 
-FIRST de B -> var T id ;  =  { var }
+FIRST de B -> var A ;  =  { var }
 FIRST de B -> if ( E ) S  =  { if }
 FIRST de B -> while ( E ) { C }  =  { while }
 FIRST de B -> switch ( E ) { D }  =  { switch }
@@ -124,7 +124,7 @@ FIRST de __V -> lambda  =  { lambda }
 FIRST de __V  =  { = lambda }
 
 
-FOLLOW de A  =  { ) }
+FOLLOW de A  =  { ) ; }
 
 FOLLOW de D  =  { } }
 
