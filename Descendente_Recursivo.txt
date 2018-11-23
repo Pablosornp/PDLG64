@@ -1,4 +1,4 @@
-Proc P;
+﻿Proc P;
 
 	if(st ϵ First(B P)={ var if while switch }) then
 	{
@@ -305,7 +305,7 @@ Proc K;
 		K();
 	}
 
-	else if(st ϵ Follow(K)={ ) }) then
+	else if(st ϵ Follow(K)={ ) ; }) then
 	{
 		print("27");
 

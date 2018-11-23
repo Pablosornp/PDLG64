@@ -1,6 +1,6 @@
 
 
-Análisis LL1 de Gramatica Sin.txt
+Anï¿½lisis LL1 de Gramatica Sin.txt
 
 FIRST de T -> int  =  { int }
 FIRST de T -> bool  =  { bool }
@@ -13,10 +13,16 @@ FIRST de B -> var A ;  =  { var }
 FIRST de B -> if ( E ) S  =  { if }
 FIRST de B -> while ( E ) { C }  =  { while }
 FIRST de B -> switch ( E ) { D }  =  { switch }
-FIRST de B  =  { if switch var while }
-FIRST de C -> B C  =  { if switch var while }
+FIRST de B -> S  =  { id print prompt return }
+FIRST de B  =  { id if print prompt return switch var while }
+FIRST de S -> id _S  =  { id }
+FIRST de S -> return X ;  =  { return }
+FIRST de S -> print ( E ) ;  =  { print }
+FIRST de S -> prompt ( id ) ;  =  { prompt }
+FIRST de S  =  { id print prompt return }
+FIRST de C -> B C  =  { id if print prompt return switch var while }
 FIRST de C -> lambda  =  { lambda }
-FIRST de C  =  { if switch var while lambda }
+FIRST de C  =  { id if print prompt return switch var while lambda }
 FIRST de D -> case Ent : C D  =  { case }
 FIRST de D -> default : C  =  { default }
 FIRST de D  =  { case default }
@@ -50,17 +56,12 @@ FIRST de K  =  { , lambda }
 FIRST de L -> E Q  =  { ! ( Bool CAD Ent id }
 FIRST de L -> lambda  =  { lambda }
 FIRST de L  =  { ! ( Bool CAD Ent id lambda }
-FIRST de P -> B P  =  { if switch var while }
+FIRST de P -> B P  =  { id if print prompt return switch var while }
 FIRST de P -> F P  =  { function }
-FIRST de P  =  { function if switch var while }
+FIRST de P  =  { function id if print prompt return switch var while }
 FIRST de Q -> , E Q  =  { , }
 FIRST de Q -> lambda  =  { lambda }
 FIRST de Q  =  { , lambda }
-FIRST de S -> id _S  =  { id }
-FIRST de S -> return X ;  =  { return }
-FIRST de S -> print ( E ) ;  =  { print }
-FIRST de S -> prompt ( id ) ;  =  { prompt }
-FIRST de S  =  { id print prompt return }
 FIRST de X -> E  =  { ! ( Bool CAD Ent id }
 FIRST de X -> lambda  =  { lambda }
 FIRST de X  =  { ! ( Bool CAD Ent id lambda }
@@ -98,13 +99,13 @@ FIRST de __V -> =  =  { = }
 FIRST de __V -> lambda  =  { lambda }
 FIRST de __V  =  { = lambda }
 
+FOLLOW de A  =  { ) ; }
 FOLLOW de D  =  { } }
 FOLLOW de C  =  { case default } }
-FOLLOW de A  =  { ) ; }
 FOLLOW de H  =  { id }
 FOLLOW de K  =  { ) ; }
-FOLLOW de L  =  { ) }
 FOLLOW de Q  =  { ) }
+FOLLOW de L  =  { ) }
 FOLLOW de X  =  { ; }
 FOLLOW de E  =  { ) , ; }
 FOLLOW de _E  =  { ) , ; }
@@ -122,4 +123,4 @@ FOLLOW de G  =  { != % && ) * + , - // ; < == > || }
 FOLLOW de _G  =  { != % && ) * + , - // ; < == > || }
 FOLLOW de __V  =  { ! ( Bool CAD Ent id }
 
-Análisis concluido satisfactoriamente
+Anï¿½lisis concluido satisfactoriamente
