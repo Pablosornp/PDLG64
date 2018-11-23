@@ -11,8 +11,6 @@ B -> var A ;
 B -> if ( E ) S
 B -> while ( E ) { C }
 B -> switch ( E ) { D }
-D -> case Ent : C D 
-D -> default : C 
 T -> int
 T -> bool 
 T -> String
@@ -71,6 +69,8 @@ G -> CAD
 G -> Bool
 _G -> ( L )
 _G -> lambda
+D -> case Ent : C D 
+D -> default : C 
 }
 
 

@@ -1,6 +1,6 @@
 Proc P;
 
-	if(st ϵ First(BP)={var,if,while,switch}) then
+	if(st ϵ First(B P)={ var if while switch }) then
 	{
 		print("1");
 
@@ -8,7 +8,7 @@ Proc P;
 		P();
 	}
 
-	else if(st ϵ First(FP)={function}) then
+	else if(st ϵ First(F P)={ function }) then
 	{
 		print("2");
 
@@ -23,16 +23,15 @@ END;
 
 Proc B;
 
-	if(st ϵ First(var T id)={var}) then
+	if(st ϵ First(var A)={ var }) then
 	{
 		print("3");
 
 		EqT(var);
-		T();
-		EqT(id);
+		A();
 	}
 
-	else if(st ϵ First(if ( E ) S)={if}) then
+	else if(st ϵ First(if ( E ) S)={ if }) then
 	{
 		print("4");
 
@@ -43,7 +42,7 @@ Proc B;
 		S();
 	}
 
-	else if(st ϵ First(while ( E ) { C })={while}) then
+	else if(st ϵ First(while ( E ) { C })={ while }) then
 	{
 		print("5");
 
@@ -56,7 +55,7 @@ Proc B;
 		EqT(});
 	}
 
-	else if(st ϵ First(switch ( E ) { D })={switch}) then
+	else if(st ϵ First(switch ( E ) { D })={ switch }) then
 	{
 		print("6");
 
@@ -76,21 +75,21 @@ END;
 
 Proc T;
 
-	if(st ϵ First(int)={int}) then
+	if(st ϵ First(int)={ int }) then
 	{
 		print("7");
 
 		EqT(int);
 	}
 
-	else if(st ϵ First(bool)={bool}) then
+	else if(st ϵ First(bool)={ bool }) then
 	{
 		print("8");
 
 		EqT(bool);
 	}
 
-	else if(st ϵ First(string)={string}) then
+	else if(st ϵ First(string)={ string }) then
 	{
 		print("9");
 
@@ -104,7 +103,7 @@ END;
 
 Proc S;
 
-	if(st ϵ First(id S')={id}) then
+	if(st ϵ First(id S')={ id }) then
 	{
 		print("10");
 
@@ -112,7 +111,7 @@ Proc S;
 		S'();
 	}
 
-	else if(st ϵ First(return X ;)={return}) then
+	else if(st ϵ First(return X ;)={ return }) then
 	{
 		print("11");
 
@@ -121,7 +120,7 @@ Proc S;
 		EqT(;);
 	}
 
-	else if(st ϵ First(print ( E ) ;)={print}) then
+	else if(st ϵ First(print ( E ) ;)={ print }) then
 	{
 		print("12");
 
@@ -132,7 +131,7 @@ Proc S;
 		EqT(;);
 	}
 
-	else if(st ϵ First(prompt ( id ) ;)={prompt}) then
+	else if(st ϵ First(prompt ( id ) ;)={ prompt }) then
 	{
 		print("13");
 
@@ -150,7 +149,7 @@ END;
 
 Proc S';
 
-	if(st ϵ First(= E ;)={=}) then
+	if(st ϵ First(= E ;)={ = }) then
 	{
 		print("14");
 
@@ -159,17 +158,16 @@ Proc S';
 		EqT(;);
 	}
 
-	else if(st ϵ First(-= E ;)={-}) then
+	else if(st ϵ First(-= E ;)={ -= }) then
 	{
 		print("15");
 
-		EqT(-);
-		EqT(=);
+		EqT(-=);
 		E();
 		EqT(;);
 	}
 
-	else if(st ϵ First(( L ) ;)={(}) then
+	else if(st ϵ First(( L ) ;)={ ( }) then
 	{
 		print("16");
 
@@ -186,7 +184,7 @@ END;
 
 Proc F;
 
-	if(st ϵ First(function H id ( A ) { C })={function}) then
+	if(st ϵ First(function H id ( A ) { C })={ function }) then
 	{
 		print("17");
 
@@ -208,14 +206,14 @@ END;
 
 Proc H;
 
-	if(st ϵ First(T)={int,bool,string}) then
+	if(st ϵ First(T)={ int bool string }) then
 	{
 		print("18");
 
 		T();
 	}
 
-	else if(st ϵ Follow(H)={id}) then
+	else if(st ϵ Follow(H)={ id }) then
 	{
 		print("19");
 
@@ -226,10 +224,10 @@ Proc H;
 END;
 
 
-###################################
+
 Proc L;
 
-	if(st ϵ First(E Q)={}) then
+	if(st ϵ First(E Q)={ ! ( Bool CAD Ent id }) then
 	{
 		print("20");
 
@@ -237,7 +235,7 @@ Proc L;
 		Q();
 	}
 
-	else if(st ϵ Follow(L)={)}) then
+	else if(st ϵ Follow(L)={ ) }) then
 	{
 		print("21");
 
@@ -251,7 +249,7 @@ END;
 
 Proc Q;
 
-	if(st ϵ First(, E Q)={,}) then
+	if(st ϵ First(, E Q)={ , }) then
 	{
 		print("22");
 
@@ -260,7 +258,7 @@ Proc Q;
 		Q();
 	}
 
-	else if(st ϵ Follow(Q)={)}) then
+	else if(st ϵ Follow(Q)={ ) }) then
 	{
 		print("23");
 
@@ -274,7 +272,7 @@ END;
 
 Proc A;
 
-	if(st ϵ First(T id K)={int,Bool,string}) then
+	if(st ϵ First(T id K)={ int Bool string }) then
 	{
 		print("24");
 
@@ -283,7 +281,7 @@ Proc A;
 		K();
 	}
 
-	else if(st ϵ Follow(A)={)}) then
+	else if(st ϵ Follow(A)={ ) ; }) then
 	{
 		print("25");
 
@@ -297,7 +295,7 @@ END;
 
 Proc K;
 
-	if(st ϵ First(, T id K)={,}) then
+	if(st ϵ First(, T id K)={ , }) then
 	{
 		print("26");
 
@@ -307,7 +305,7 @@ Proc K;
 		K();
 	}
 
-	else if(st ϵ Follow(K)={)}) then
+	else if(st ϵ Follow(K)={ ) }) then
 	{
 		print("27");
 
@@ -318,17 +316,17 @@ Proc K;
 END;
 
 
-################################
+
 Proc X;
 
-	if(st ϵ First(E)={}) then
+	if(st ϵ First(E)={ ! ( Bool CAD Ent id }) then
 	{
 		print("28");
 
 		E();
 	}
 
-	else if(st ϵ Follow(X)={;}) then
+	else if(st ϵ Follow(X)={ ; }) then
 	{
 		print("29");
 
@@ -342,7 +340,7 @@ END;
 
 Proc C;
 
-	if(st ϵ First(B C)={var,if,while,switch}) then
+	if(st ϵ First(B C)={ var if while switch }) then
 	{
 		print("30");
 
@@ -350,7 +348,7 @@ Proc C;
 		C();
 	}
 
-	else if(st ϵ Follow(C)={}}) then
+	else if(st ϵ Follow(C)={ case } default }) then
 	{
 		print("31");
 
@@ -361,10 +359,10 @@ Proc C;
 END;
 
 
-#############################
+
 Proc E;
 
-	if(st ϵ First(R E')={}) then
+	if(st ϵ First(R E')={ ! ( Bool CAD Ent id }) then
 	{
 		print("32");
 
@@ -376,20 +374,19 @@ Proc E;
 END;
 
 
-#############################
+
 Proc E';
 
-	if(st ϵ First(| | R E')={|}) then
+	if(st ϵ First(|| R E')={ || }) then
 	{
 		print("33");
 
-		EqT(|);
-		EqT(|);
+		EqT(||);
 		R();
 		E'();
 	}
 
-	else if(st ϵ Follow(E')={}) then
+	else if(st ϵ Follow(E')={ ) , ; }) then
 	{
 		print("34");
 
@@ -400,10 +397,10 @@ Proc E';
 END;
 
 
-#############################
+
 Proc R;
 
-	if(st ϵ First(U R')={}) then
+	if(st ϵ First(U R')={ ! ( Bool CAD Ent id }) then
 	{
 		print("35");
 
@@ -415,20 +412,19 @@ Proc R;
 END;
 
 
-#############################
+
 Proc R';
 
-	if(st ϵ First(& & U R')={&}) then
+	if(st ϵ First(&& U R')={ && }) then
 	{
 		print("36");
 
-		EqT(&);
-		EqT(&);
+		EqT(&&);
 		U();
 		R'();
 	}
 
-	else if(st ϵ Follow(R')={}) then
+	else if(st ϵ Follow(R')={ ) , ; || }) then
 	{
 		print("37");
 
@@ -439,10 +435,10 @@ Proc R';
 END;
 
 
-#############################
+
 Proc U;
 
-	if(st ϵ First(V U')={}) then
+	if(st ϵ First(V U')={ ! ( Bool CAD Ent id }) then
 	{
 		print("38");
 
@@ -454,30 +450,28 @@ Proc U;
 END;
 
 
-#############################
+
 Proc U';
 
-	if(st ϵ First(= = V U')={=}) then
+	if(st ϵ First(== V U')={ == }) then
 	{
 		print("39");
 
-		EqT(=);
-		EqT(=);
+		EqT(==);
 		V();
 		U'();
 	}
 
-	else if(st ϵ First(! = V U')={!}) then
+	else if(st ϵ First(!= V U')={ != }) then
 	{
 		print("40");
 
-		EqT(!);
-		EqT(=);
+		EqT(!=);
 		V();
 		U'();
 	}
 
-	else if(st ϵ Follow(U')={}) then
+	else if(st ϵ Follow(U')={ && ) , ; || }) then
 	{
 		print("41");
 
@@ -488,10 +482,10 @@ Proc U';
 END;
 
 
-#############################
+
 Proc V;
 
-	if(st ϵ First(W V')={}) then
+	if(st ϵ First(W V')={ ! ( Bool CAD Ent id }) then
 	{
 		print("42");
 
@@ -503,10 +497,10 @@ Proc V;
 END;
 
 
-#############################
+
 Proc V';
 
-	if(st ϵ First(> V'' W V')={>}) then
+	if(st ϵ First(> V'' W V')={ > }) then
 	{
 		print("43");
 
@@ -516,7 +510,7 @@ Proc V';
 		V'();
 	}
 
-	else if(st ϵ First(< V'' W V')={<}) then
+	else if(st ϵ First(< V'' W V')={ < }) then
 	{
 		print("44");
 
@@ -526,7 +520,7 @@ Proc V';
 		V'();
 	}
 
-	else if(st ϵ Follow(V')={}) then
+	else if(st ϵ Follow(V')={ != && ) , ; == || }) then
 	{
 		print("45");
 
@@ -537,17 +531,17 @@ Proc V';
 END;
 
 
-#############################
+
 Proc V'';
 
-	if(st ϵ First(=)={=}) then
+	if(st ϵ First(=)={ = }) then
 	{
 		print("46");
 
 		EqT(=);
 	}
 
-	else if(st ϵ Follow(V'')={}) then
+	else if(st ϵ Follow(V'')={ ! ( Bool CAD Ent id }) then
 	{
 		print("47");
 
@@ -558,10 +552,10 @@ Proc V'';
 END;
 
 
-#############################
+
 Proc W;
 
-	if(st ϵ First(Z W')={}) then
+	if(st ϵ First(Z W')={ ! ( Bool CAD Ent id }) then
 	{
 		print("48");
 
@@ -573,10 +567,10 @@ Proc W;
 END;
 
 
-#############################
+
 Proc W';
 
-	if(st ϵ First(+ Z W')={+}) then
+	if(st ϵ First(+ Z W')={ + }) then
 	{
 		print("49");
 
@@ -585,7 +579,7 @@ Proc W';
 		W'();
 	}
 
-	else if(st ϵ First(- Z W')={-}) then
+	else if(st ϵ First(- Z W')={ - }) then
 	{
 		print("50");
 
@@ -594,7 +588,7 @@ Proc W';
 		W'();
 	}
 
-	else if(st ϵ Follow(W')={}) then
+	else if(st ϵ Follow(W')={ != && ) , ; < == > || }) then
 	{
 		print("51");
 
@@ -605,14 +599,14 @@ Proc W';
 END;
 
 
-#############################
+
 Proc Z;
 
-	if(st ϵ First(α Z')={}) then
+	if(st ϵ First(G Z')={ ! ( Bool CAD Ent id }) then
 	{
 		print("52");
 
-		α();
+		G();
 		Z'();
 	}
 
@@ -620,37 +614,37 @@ Proc Z;
 END;
 
 
-#############################
+
 Proc Z';
 
-	if(st ϵ First(* α Z')={*}) then
+	if(st ϵ First(* G Z')={ * }) then
 	{
 		print("53");
 
 		EqT(*);
-		α();
+		G();
 		Z'();
 	}
 
-	else if(st ϵ First(/ α Z')={/}) then
+	else if(st ϵ First(/ G Z')={ / }) then
 	{
 		print("54");
 
 		EqT(/);
-		α();
+		G();
 		Z'();
 	}
 
-	else if(st ϵ First(% α Z')={/}) then
+	else if(st ϵ First(% G Z')={ % }) then
 	{
 		print("55");
 
 		EqT(%);
-		α();
+		G();
 		Z'();
 	}
 
-	else if(st ϵ Follow(Z')={}) then
+	else if(st ϵ Follow(Z')={ != && ) + , - ; < == > || }) then
 	{
 		print("56");
 
@@ -662,25 +656,25 @@ END;
 
 
 
-Proc α;
+Proc G;
 
-	if(st ϵ First(! α)={!}) then
+	if(st ϵ First(! G)={ ! }) then
 	{
 		print("57");
 
 		EqT(!);
-		α();
+		G();
 	}
 
-	else if(st ϵ First(id α')={id}) then
+	else if(st ϵ First(id G')={ id }) then
 	{
 		print("58");
 
 		EqT(id);
-		α'();
+		G'();
 	}
 
-	else if(st ϵ First(( E ))={(}) then
+	else if(st ϵ First(( E ))={ ( }) then
 	{
 		print("59");
 
@@ -689,35 +683,35 @@ Proc α;
 		EqT());
 	}
 
-	else if(st ϵ First(cte_entera)={cte_entera}) then
+	else if(st ϵ First(Ent)={ Ent }) then
 	{
 		print("60");
 
-		EqT(cte_entera);
+		EqT(Ent);
 	}
 
-	else if(st ϵ First(cadena)={cadena}) then
+	else if(st ϵ First(CAD)={ CAD }) then
 	{
 		print("61");
 
-		EqT(cadena);
+		EqT(CAD);
 	}
 
-	else if(st ϵ First(cte_bool)={cte_bool}) then
+	else if(st ϵ First(Bool)={ Bool }) then
 	{
 		print("62");
 
-		EqT(cte_bool);
+		EqT(Bool);
 	}
 
 	else ERROR;
 END;
 
 
-#############################
-Proc α';
 
-	if(st ϵ First(( L ))={(}) then
+Proc G';
+
+	if(st ϵ First(( L ))={ ( }) then
 	{
 		print("63");
 
@@ -726,7 +720,7 @@ Proc α';
 		EqT();
 	}
 
-	else if(st ϵ Follow(α')={}) then
+	else if(st ϵ Follow(G')={ != % && ) * + , - / ; < == > || }) then
 	{
 		print("64");
 
@@ -735,3 +729,29 @@ Proc α';
 
 	else ERROR;
 END;
+
+Proc D;
+
+	if(st ϵ First(case Ent : C D)={ case }) then
+	{
+		print("65");
+
+		EqT(case);
+		EqT(Ent);
+		EqT(:);
+		C();
+		D();
+	}
+
+	else if(st ϵ First(default : C)={ default }) then
+	{
+		print("66");
+
+		EqT(default);
+		EqT(:);
+		C();
+	}
+
+	else ERROR;
+END;
+
