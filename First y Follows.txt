@@ -1,6 +1,6 @@
+﻿
 
-
-An�lisis LL1 de Gramatica Sin.txt
+Análisis LL1 de Gramatica Sin.txt
 
 FIRST de T -> int  =  { int }
 FIRST de T -> bool  =  { bool }
@@ -58,7 +58,8 @@ FIRST de L -> lambda  =  { lambda }
 FIRST de L  =  { ! ( Bool CAD Ent id lambda }
 FIRST de P -> B P  =  { id if print prompt return switch var while }
 FIRST de P -> F P  =  { function }
-FIRST de P  =  { function id if print prompt return switch var while }
+FIRST de P -> lambda  =  { lambda }
+FIRST de P  =  { function id if print prompt return switch var while lambda }
 FIRST de Q -> , E Q  =  { , }
 FIRST de Q -> lambda  =  { lambda }
 FIRST de Q  =  { , lambda }
@@ -99,13 +100,15 @@ FIRST de __V -> =  =  { = }
 FIRST de __V -> lambda  =  { lambda }
 FIRST de __V  =  { = lambda }
 
+
 FOLLOW de A  =  { ) ; }
 FOLLOW de D  =  { } }
 FOLLOW de C  =  { case default } }
 FOLLOW de H  =  { id }
 FOLLOW de K  =  { ) ; }
-FOLLOW de Q  =  { ) }
 FOLLOW de L  =  { ) }
+FOLLOW de P  =  { $ (final de cadena) }
+FOLLOW de Q  =  { ) }
 FOLLOW de X  =  { ; }
 FOLLOW de E  =  { ) , ; }
 FOLLOW de _E  =  { ) , ; }
@@ -123,4 +126,4 @@ FOLLOW de G  =  { != % && ) * + , - // ; < == > || }
 FOLLOW de _G  =  { != % && ) * + , - // ; < == > || }
 FOLLOW de __V  =  { ! ( Bool CAD Ent id }
 
-An�lisis concluido satisfactoriamente
+Análisis concluido satisfactoriamente
