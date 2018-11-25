@@ -37,6 +37,7 @@ K -> lambda
 X -> E 
 X -> lambda
 C -> B C 
+C -> break ;
 C -> lambda
 E -> R _E
 _E -> || R _E 
