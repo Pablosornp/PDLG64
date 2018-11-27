@@ -50,11 +50,10 @@ _U -> == V
 _U -> != V
 _U -> lambda
 V -> W _V
-_V -> > __V W _V 
-_V -> < __V W _V
+_V -> > W _V 
+_V -> < W _V
 _V -> lambda
-__V -> =
-__V -> lambda
+
 W -> Z _W
 _W -> + Z _W 
 _W -> - Z _W
