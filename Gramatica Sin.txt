@@ -1,5 +1,5 @@
 
-NoTerminales = { P B T S _S F H L Q A K X C E _E R _R U _U V _V __V W _W Z _Z G _G D }
+NoTerminales = { P B T S _S F H L Q A K X C E _E R _R U _U V _V W _W Z _Z G _G D }
 Terminales = {	var id ; if ( ) while { } switch case break default int bool String return print
 		 	prompt function , || && == !=  < > -= ! = + - * / % cte_ent cadena cte_bool : Ent CAD Bool }
 Axioma = P
