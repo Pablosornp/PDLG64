@@ -157,6 +157,14 @@ Proc S;
 		EqT(;);
 	}
 
+	else if(st ϵ First( break ;)={ break }) then
+	{
+		print("16");
+
+		EqT(break);
+		EqT(;);
+	}
+
 	else ERROR;
 END;
 
@@ -166,7 +174,7 @@ Proc S';
 
 	if(st ϵ First(= E ;)={ = }) then
 	{
-		print("16");
+		print("17");
 
 		EqT(=);
 		E();
@@ -175,7 +183,7 @@ Proc S';
 
 	else if(st ϵ First(-= E ;)={ -= }) then
 	{
-		print("17");
+		print("18");
 
 		EqT(-=);
 		E();
@@ -184,7 +192,7 @@ Proc S';
 
 	else if(st ϵ First(( L ) ;)={ ( }) then
 	{
-		print("18");
+		print("19");
 
 		EqT(();
 		L();
@@ -201,7 +209,7 @@ Proc F;
 
 	if(st ϵ First(function H id ( A ) { C })={ function }) then
 	{
-		print("19");
+		print("20");
 
 		EqT(function);
 		H();
@@ -223,14 +231,14 @@ Proc H;
 
 	if(st ϵ First(T)={ int bool string }) then
 	{
-		print("20");
+		print("21");
 
 		T();
 	}
 
 	else if(st ϵ Follow(H)={ id }) then
 	{
-		print("21");
+		print("22");
 
 		0;		
 	}
@@ -244,7 +252,7 @@ Proc L;
 
 	if(st ϵ First(E Q)={ ! ( Bool CAD Ent id }) then
 	{
-		print("22");
+		print("23");
 
 		E();
 		Q();
@@ -252,7 +260,7 @@ Proc L;
 
 	else if(st ϵ Follow(L)={ ) }) then
 	{
-		print("23");
+		print("24");
 
 		0;		
 	}
@@ -266,7 +274,7 @@ Proc Q;
 
 	if(st ϵ First(, E Q)={ , }) then
 	{
-		print("24");
+		print("25");
 
 		EqT(,);
 		E();
@@ -275,7 +283,7 @@ Proc Q;
 
 	else if(st ϵ Follow(Q)={ ) }) then
 	{
-		print("25");
+		print("26");
 
 		0;		
 	}
@@ -289,7 +297,7 @@ Proc A;
 
 	if(st ϵ First(T id K)={ int Bool string }) then
 	{
-		print("26");
+		print("27");
 
 		T();
 		EqT(id);
@@ -298,7 +306,7 @@ Proc A;
 
 	else if(st ϵ Follow(A)={ ) ; }) then
 	{
-		print("27");
+		print("28");
 
 		0;		
 	}
@@ -312,7 +320,7 @@ Proc K;
 
 	if(st ϵ First(, T id K)={ , }) then
 	{
-		print("28");
+		print("29");
 
 		EqT(,);
 		T();
@@ -322,7 +330,7 @@ Proc K;
 
 	else if(st ϵ Follow(K)={ ) ; }) then
 	{
-		print("29");
+		print("30");
 
 		0;		
 	}
@@ -336,14 +344,14 @@ Proc X;
 
 	if(st ϵ First(E)={ ! ( Bool CAD Ent id }) then
 	{
-		print("30");
+		print("31");
 
 		E();
 	}
 
 	else if(st ϵ Follow(X)={ ; }) then
 	{
-		print("31");
+		print("32");
 
 		0;		
 	}
@@ -355,20 +363,12 @@ END;
 
 Proc C;
 
-	if(st ϵ First(B C)={ id if print prompt return switch var while }) then
-	{
-		print("32");
-
-		B();
-		C();
-	}
-
-	else if(st ϵ First(break ;)={ break }) then
+	if(st ϵ First(B C)={ break id if print prompt return switch var while }) then
 	{
 		print("33");
 
-		EqT(break);
-		EqT(;);
+		B();
+		C();
 	}
 
 	else if(st ϵ Follow(C)={ case } default }) then
