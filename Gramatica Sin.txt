@@ -20,6 +20,7 @@ S -> id _S
 S -> return X ;
 S -> print ( E ) ;
 S -> prompt ( id ) ;
+S -> break ;
 _S -> = E ;
 _S -> -= E ;
 _S -> ( L ) ;
@@ -37,7 +38,6 @@ K -> lambda
 X -> E 
 X -> lambda
 C -> B C 
-C -> break ;
 C -> lambda
 E -> R _E
 _E -> || R _E 
