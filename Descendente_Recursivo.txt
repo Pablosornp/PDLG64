@@ -1,6 +1,6 @@
 ﻿Proc P;
 
-	if(st ϵ First(B P)={ id if print prompt return switch var while }) then
+	if(st ϵ First(B P)={ break id if print prompt return switch var while }) then
 	{
 		print("1");
 
@@ -76,7 +76,7 @@ Proc B;
 		EqT(});
 	}
 
-	else if(st ϵ First(S)={ id print prompt return }) then
+	else if(st ϵ First(S)={ break id print prompt return }) then
 	{
 		print("8");
 
