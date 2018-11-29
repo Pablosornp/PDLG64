@@ -1,7 +1,7 @@
 
 NoTerminales = { P B T S _S F H L Q A K X C E _E R _R U _U V _V W _W Z _Z G _G D }
-Terminales = {	var id ; if ( ) while { } switch case break default int bool String return print
-		 	prompt function , || && == !=  < > -= ! = + - * / % cte_ent cadena cte_bool : Ent CAD Bool }
+Terminales = {	var id ; if ( ) while { } switch case break default int bool string return print
+		 	prompt function , || && == !=  < > -= ! = + - * / %  CAD : cte_ent  cte_bool  }
 Axioma = P
 
 Producciones = {
@@ -14,8 +14,8 @@ B -> while ( E ) { C }
 B -> switch ( E ) { D }
 B -> S
 T -> int
-T -> bool 
-T -> String
+T -> bool
+T -> string
 S -> id _S
 S -> return X ;
 S -> print ( E ) ;
@@ -25,63 +25,53 @@ _S -> = E ;
 _S -> -= E ;
 _S -> ( L ) ;
 F -> function H id ( A ) { C }
-H -> T 
+H -> T
 H -> lambda
-L -> E Q 
+L -> E Q
 L -> lambda
-Q -> , E Q 
+Q -> , E Q
 Q -> lambda
-A -> T id K 
+A -> T id K
 A -> lambda
-K -> , T id K 
+K -> , T id K
 K -> lambda
-X -> E 
+X -> E
 X -> lambda
-C -> B C 
+C -> B C
 C -> lambda
 E -> R _E
-_E -> || R _E 
+_E -> || R _E
 _E -> lambda
 R -> U _R
 _R -> && U _R
 _R -> lambda
 U -> V _U
-_U -> == V 
+_U -> == V
 _U -> != V
 _U -> lambda
 V -> W _V
-_V -> > W _V 
+_V -> > W _V
 _V -> < W _V
 _V -> lambda
 
 W -> Z _W
-_W -> + Z _W 
+_W -> + Z _W
 _W -> - Z _W
 _W -> lambda
 Z -> G _Z
 _Z -> * G _Z
 _Z -> / G _Z
-_Z -> % G _Z 
+_Z -> % G _Z
 _Z -> lambda
-G -> ! G 
+G -> ! G
 G -> id _G
 G -> ( E )
-G -> Ent
+G -> cte_ent
 G -> CAD
-G -> Bool
+G -> cte_bool
 _G -> ( L )
 _G -> lambda
-D -> case Ent : C D 
-D -> default : C 
+D -> case cte_ent : C D
+D -> default : C
 }
-
-
-
-
-
-
-
-
-
-
 
