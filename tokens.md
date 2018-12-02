@@ -1,4 +1,4 @@
-# Tokens proyecto pdl
+4# Tokens proyecto pdl
 * <Ent,valor>
 * <CAD, lexema>
 * <Bool, valor > (true)
@@ -16,15 +16,13 @@
 * <FIN, - > ( ; )
 * <SIG, - > ( , )
 * <OR, -> (||)
-* <NOT, -> ( ! ) 
+* <NOT, -> ( ! )
 * <Asig_R, -> (-=)
 * <Asig, - > (=)
 * <OP_sal, - > (print (c))
 * <OP-en, - > (promt (c))
 * <OP_MAY, - > (>)
 * <OP_MEN, - > (<) 
-* <OP_MEN_IG, - > (<=)
-* <OP_MAY_IG, - > (>=)
 * <OP_IG, - > (==)
 * <OP_DISTINTO,- > (!=)
 * <Dos_puntos, - > (:)
