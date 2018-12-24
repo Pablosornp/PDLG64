@@ -3,6 +3,7 @@ import re
 
 
 
+
 #Palabras reservadas
 reservadas = ['INT','BOOL','STRING','IF','DEFAULT','BREAK','RETURN','FUNCTION','VAR','SWITCH','CASE','PRINT','PROMT']
 
@@ -14,36 +15,142 @@ tokens = reservadas + ['ID','cteent','ctebool','CAD','MAS','MENOS','MUL','MOD','
 #Tabla de palabras reservadas
 valorReservadas = {'INT': 1, 'BOOL': 2, 'STRING': 3, 'IF': 4, 'DEFAULT': 5, 'BREAK': 6, 'RETURN': 7, 'FUNCTION': 8, 'VAR': 9, 'SWITCH': 10, 'CASE': 11, 'PRINT': 12, 'PROMPT': 13, 'TRUE': 'true', 'FALSE':'false' }
 
+#Tabla de simbolos 1.0
+tablaDeSimbolos = {}
+
+#Puntero a TS siguiente
+count = 1
+
 #Expresiones Regulares
 
-t_MAS = r'\+'
-t_MENOS = r'-'
-t_MUL = r'\*'
-t_DIV = r'/'
-t_MOD = r'%'
+def t_MAS(c):
+	r'\+'
+	c.value=""
+	return c
+
+
+def t_MENOS(c):
+	r'-'
+	c.value=""
+	return c
+
+
+def t_MUL(c):
+	r'\*'
+	c.value=""
+	return c
+
+
+def t_DIV(c):
+	r'/'
+	c.value=""
+	return c
+
+def t_MOD(c):
+	r'%'
+	c.value=""
+	return c
 
 t_ignore = '\n\t '
-t_LLAVA = r'\{'
-t_LLAVC = r'\}'
-t_PARA = r'\('
-t_PARC = r'\)'
-t_CORA = r'\['
-t_CORC = r'\]'
-
-t_FIN = r';'
-t_SIG = r','
-t_DOSPUNTOS = r':'
-
-t_OR = r'\|\|'
-t_AND = r'&&'
-t_NOT = r'!'
-t_ASIGR = r'-='
-t_ASIG = r'='
-t_OPMAY = r'>'
-t_OPMEN = r'<'
-t_OPIG = r'=='
 
 
+def t_LLAVA(c):
+	r'\{'
+	c.value=""
+	return c
+
+def t_LLAVC(c):
+	r'\}'
+	c.value=""
+	return c
+
+
+def t_PARA(c):
+	r'\('
+	c.value=""
+	return c
+
+
+def t_PARC(c):
+	r'\)'
+	c.value=""
+	return c
+
+
+def t_CORA(c):
+	r'\['
+	c.value=""
+	return c
+
+
+def t_CORC(c):
+	r'\]'
+	c.value=""
+	return c
+
+def t_FIN(c):
+	r';'
+	c.value=""
+	return c
+
+
+def t_SIG(c):
+	r','
+	c.value=""
+	return c
+
+def t_DOSPUNTOS(c):
+	r':'
+	c.value=""
+	return c
+
+def t_OR(c):
+	r'\|\|'
+	c.value=""
+	return c
+
+def t_AND(c):
+	r'&&'
+	c.value=""
+	return c
+
+def t_NOT(c):
+	r'!'
+	c.value=""
+	return c
+
+def t_ASIGR(c):
+	r'-='
+	c.value=""
+	return c
+
+
+def t_OPIG(c):
+	r'=='
+	c.value=""
+	return c
+
+
+def t_ASIG(c):
+	r'='
+	c.value=""
+	return c
+
+def t_OPDISTINTO(c):
+	r'!='
+	c.value=""
+	return c
+
+
+def t_OPMAY(c):
+	r'>'
+	c.value=""
+	return c
+
+def t_OPMEN(c):
+	r'<'
+	c.value=""
+	return c
 
 #Funciones
 # Comment
@@ -53,7 +160,9 @@ def t_COMMENT(t):
 
 def t_ID(c):
 	r'[a-zA-Z_]+[a-zA-Z_0-9]*'
+	lexema = c.value
 	c.value=valorReservadas.get(c.value.upper(), 0)
+	#Vemos si es cte booleana o PR
 	if(c.value!=0):
 		if c.value=='true':
 			c.type='ctebool'
@@ -64,7 +173,14 @@ def t_ID(c):
 		else:
 			c.type='PR'
 	else:
-		c.value='ptrTS'
+		if tablaDeSimbolos.get(lexema, 0) == 0:
+			global count
+			tablaDeSimbolos[lexema]=count
+			count = count+1
+			c.value=tablaDeSimbolos[lexema]
+		else:
+			c.value=tablaDeSimbolos.get(lexema, 0)
+
 
 
 	return c
@@ -76,27 +192,33 @@ def t_ENT(c):
 	return c
 
 def t_CAD(t):
-    r'\"([^\\\n]|(\\(.|\n)))*?\"'
+    r'(\"([^\\\n]|(\\(.|\n)))*?\")|(\'([^\\\n]|(\\(.|\n)))*?\')'
     return t
 
 def t_error(t):
 	print ("caracter ilegal '%s'" % t.value[0])
 	t.lexer.skip(1)
 
-analizador = lex.lex()
 
-nombreFichero = input("Inserta nombre de fichero:")
-handle = open(nombreFichero)
-cadena =handle.read()
-analizador.input(cadena)
-ftokens = open("tokens.txt","w+")
+#Funcion Main
+def main():
+	analizador = lex.lex()
 
-while True:
-	tok = analizador.token()
-	if not tok :
-		print("Token erroneo:",tok)
-		break
-	print('<' + tok.type + ','+ str(tok.value) + '>')
-	ftokens.write('<' + tok.type + ','+ str(tok.value) + '>\n')
+	nombreFichero = input("Inserta nombre de fichero:")
+	handle = open(nombreFichero)
+	cadena =handle.read()
+	analizador.input(cadena)
+	ftokens = open("tokens.txt","w+")
 
-ftokens.close()
+	while True:
+		tok = analizador.token()
+		if not tok :
+			print("Token erroneo:",tok)
+			break
+		print('<' + tok.type + ','+ str(tok.value) + '>')
+		ftokens.write('<' + tok.type + ','+ str(tok.value) + '>\n')
+
+	ftokens.close()
+
+if __name__ == '__main__':
+	main()

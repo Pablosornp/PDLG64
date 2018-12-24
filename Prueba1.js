@@ -1,11 +1,16 @@
-var int inte3 = 343434
-var string cadenas = "coinjgroigj"
-var bool verdad = true
-var bool verdad = false
-//commen
-//coment
-/*Comentario*/
-switch(i){
-	case 0: num-=2; break;
-	default: num=num+2;
+var int a;
+var int b;
+var int c;
+print ( 'Introduce el primer operando' );
+prompt (a);
+print ( 'Introduce el segundo operando' );
+prompt (b);
+ function int divide (int num1, int num2)
+{
+	var int res;
+	res = num1/num2;
+	return res;
 }
+c = divide (a, b);
+ print (c);
+ 
