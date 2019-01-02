@@ -199,6 +199,9 @@ def t_error(t):
 	print ("caracter ilegal '%s'" % t.value[0])
 	t.lexer.skip(1)
 
+def getJSlexer():
+	return lex.lex()
+
 
 #Funcion Main
 def main():
@@ -206,7 +209,7 @@ def main():
 
 	nombreFichero = input("Inserta nombre de fichero:")
 	handle = open(nombreFichero)
-	cadena =handle.read()
+	cadena = handle.read()
 	analizador.input(cadena)
 	ftokens = open("tokens.txt","w+")
 

@@ -1,0 +1,534 @@
+print("Des ");
+Proc P;
+
+	if(st ϵ First(B P)={ break id if print prompt return switch var while }) then
+	{
+		print("1");
+		B();
+		P();
+	}
+	else if(st ϵ First(F P)={ function }) then
+	{
+		print("2");
+		F();
+		P();
+	}
+	else if(st ϵ Follow(P)={ $ })
+	{
+		print("3");
+	}
+	else ERROR;
+END;
+
+Proc B;
+	if(st ϵ First(var A ;)={ var }) then
+	{
+		print("4");
+		EqT(var);
+		A();
+		EqT(;);
+	}
+	else if(st ϵ First(if ( E ) S)={ if }) then
+	{
+		print("5");
+		EqT(if);
+		EqT(();
+		E();
+		EqT());
+		S();
+	}
+	else if(st ϵ First(while ( E ) { C })={ while }) then
+	{
+		print("6");
+		EqT(while);
+		EqT(();
+		E();
+		EqT());
+		EqT({);
+		C();
+		EqT(});
+	}
+	else if(st ϵ First(switch ( E ) { D })={ switch }) then
+	{
+		print("7");
+		EqT(switch);
+		EqT(();
+		E();
+		EqT());
+		EqT({);
+		D();
+		EqT(});
+	}
+	else if(st ϵ First(S)={ break id print prompt return }) then
+	{
+		print("8");
+		S();
+	}
+	else ERROR;
+END;
+
+Proc T;
+	if(st ϵ First(int)={ int }) then
+	{
+		print("9");
+		EqT(int);
+	}
+	else if(st ϵ First(bool)={ bool }) then
+	{
+		print("10");
+		EqT(bool);
+	}
+	else if(st ϵ First(string)={ string }) then
+	{
+		print("11");
+		EqT(string);
+	}
+	else ERROR;
+END;
+
+
+
+Proc S;
+	if(st ϵ First(id S')={ id }) then
+	{
+		print("12");
+		EqT(id);
+		S'();
+	}
+	else if(st ϵ First(return X ;)={ return }) then
+	{
+		print("13");
+		EqT(return);
+		X();
+		EqT(;);
+	}
+	else if(st ϵ First(print ( E ) ;)={ print }) then
+	{
+		print("14");
+		EqT(print);
+		EqT(();
+		E();
+		EqT());
+		EqT(;);
+	}
+	else if(st ϵ First(prompt ( id ) ;)={ prompt }) then
+	{
+		print("15");
+		EqT(prompt);
+		EqT(();
+		EqT(id);
+		EqT());
+		EqT(;);
+	}
+	else if(st ϵ First( break ;)={ break }) then
+	{
+		print("16");
+		EqT(break);
+		EqT(;);
+	}
+	else ERROR;
+END;
+
+Proc S';
+	if(st ϵ First(= E ;)={ = }) then
+	{
+		print("17");
+		EqT(=);
+		E();
+		EqT(;);
+	}
+	else if(st ϵ First(-= E ;)={ -= }) then
+	{
+		print("18");
+		EqT(-=);
+		E();
+		EqT(;);
+	}
+	else if(st ϵ First(( L ) ;)={ ( }) then
+	{
+		print("19");
+		EqT(();
+		L();
+		EqT());
+		EqT(;);
+	}
+	else ERROR;
+END;
+
+Proc F;
+	if(st ϵ First(function H id ( A ) { C })={ function }) then
+	{
+		print("20");
+		EqT(function);
+		H();
+		EqT(id);
+		EqT(();
+		A();
+		EqT());
+		EqT({);
+		C();
+		EqT(});
+	}
+	else ERROR;
+END;
+
+Proc H;
+	if(st ϵ First(T)={ int bool string }) then
+	{
+		print("21");
+		T();
+	}
+	else if(st ϵ Follow(H)={ id }) then
+	{
+		print("22");
+	}
+	else ERROR;
+END;
+
+Proc L;
+	if(st ϵ First(E Q)={ ! ( cte_bool CAD cte_ent id }) then
+	{
+		print("23");
+		E();
+		Q();
+	}
+	else if(st ϵ Follow(L)={ ) }) then
+	{
+		print("24");
+	}
+	else ERROR;
+END;
+
+Proc Q;
+	if(st ϵ First(, E Q)={ , }) then
+	{
+		print("25");
+		EqT(,);
+		E();
+		Q();
+	}
+	else if(st ϵ Follow(Q)={ ) }) then
+	{
+		print("26");
+	}
+
+	else ERROR;
+END;
+
+Proc A;
+	if(st ϵ First(T id K)={ int bool string }) then
+	{
+		print("27");
+		T();
+		EqT(id);
+		K();
+	}
+	else if(st ϵ Follow(A)={ ) ; }) then
+	{
+		print("28");
+	}
+	else ERROR;
+END;
+
+Proc K;
+	if(st ϵ First(, T id K)={ , }) then
+	{
+		print("29");
+		EqT(,);
+		T();
+		EqT(id);
+		K();
+	}
+	else if(st ϵ Follow(K)={ ) ; }) then
+	{
+		print("30");
+	}
+	else ERROR;
+END;
+
+Proc X;
+	if(st ϵ First(E)={ ! ( cte_bool CAD cte_ent id }) then
+	{
+		print("31");
+		E();
+	}
+	else if(st ϵ Follow(X)={ ; }) then
+	{
+		print("32");
+	}
+	else ERROR;
+END;
+
+Proc C;
+	if(st ϵ First(B C)={ break id if print prompt return switch var while }) then
+	{
+		print("33");
+		B();
+		C();
+	}
+	else if(st ϵ Follow(C)={ case } default }) then
+	{
+		print("34");
+	}
+	else ERROR;
+END;
+
+Proc E;
+	if(st ϵ First(R E')={ ! ( cte_bool CAD cte_ent id }) then
+	{
+		print("35");
+		R();
+		E'();
+	}
+	else ERROR;
+END;
+
+Proc E';
+	if(st ϵ First(|| R E')={ || }) then
+	{
+		print("36");
+		EqT(||);
+		R();
+		E'();
+	}
+	else if(st ϵ Follow(E')={ ) , ; }) then
+	{
+		print("37");
+	}
+	else ERROR;
+END;
+
+Proc R;
+	if(st ϵ First(U R')={ ! ( cte_bool CAD cte_ent id }) then
+	{
+		print("38");
+		U();
+		R'();
+	}
+	else ERROR;
+END;
+
+Proc R';
+	if(st ϵ First(&& U R')={ && }) then
+	{
+		print("39");
+		EqT(&&);
+		U();
+		R'();
+	}
+	else if(st ϵ Follow(R')={ ) , ; || }) then
+	{
+		print("40");
+	}
+	else ERROR;
+END;
+
+Proc U;
+	if(st ϵ First(V U')={ ! ( cte_bool CAD cte_ent id }) then
+	{
+		print("41");
+		V();
+		U'();
+	}
+	else ERROR;
+END;
+
+Proc U';
+	if(st ϵ First(== V U')={ == }) then
+	{
+		print("42");
+		EqT(==);
+		V();
+		U'();
+	}
+	else if(st ϵ First(!= V U')={ != }) then
+	{
+		print("43");
+		EqT(!=);
+		V();
+		U'();
+	}
+	else if(st ϵ Follow(U')={ && ) , ; || }) then
+	{
+		print("44");
+	}
+	else ERROR;
+END;
+
+Proc V;
+	if(st ϵ First(W V')={ ! ( cte_bool CAD cte_ent id }) then
+	{
+		print("45");
+		W();
+		V'();
+	}
+	else ERROR;
+END;
+
+Proc V';
+	if(st ϵ First(> W V')={ > }) then
+	{
+		print("46");
+		EqT(>);
+		W();
+		V'();
+	}
+	else if(st ϵ First(< W V')={ < }) then
+	{
+		print("47");
+		EqT(<);
+		W();
+		V'();
+	}
+	else if(st ϵ Follow(V')={ != && ) , ; == || }) then
+	{
+		print("48");
+	}
+
+	else ERROR;
+END;
+
+Proc W;
+	if(st ϵ First(Z W')={ ! ( cte_bool CAD cte_ent id }) then
+	{
+		print("49");
+		Z();
+		W'();
+	}
+	else ERROR;
+END;
+
+Proc W';
+	if(st ϵ First(+ Z W')={ + }) then
+	{
+		print("50");
+		EqT(+);
+		Z();
+		W'();
+	}
+	else if(st ϵ First(- Z W')={ - }) then
+	{
+		print("51");
+		EqT(-);
+		Z();
+		W'();
+	}
+	else if(st ϵ Follow(W')={ != && ) , ; < == > || }) then
+	{
+		print("52");
+	}
+	else ERROR;
+END;
+
+Proc Z;
+	if(st ϵ First(G Z')={ ! ( cte_bool CAD cte_ent id }) then
+	{
+		print("53");
+		G();
+		Z'();
+	}
+	else ERROR;
+END;
+
+Proc Z';
+
+	if(st ϵ First(* G Z')={ * }) then
+	{
+		print("54");
+		EqT(*);
+		G();
+		Z'();
+	}
+	else if(st ϵ First(/ G Z')={ / }) then
+	{
+		print("55");
+		EqT(/);
+		G();
+		Z'();
+	}
+	else if(st ϵ First(% G Z')={ % }) then
+	{
+		print("56");
+		EqT(%);
+		G();
+		Z'();
+	}
+	else if(st ϵ Follow(Z')={ != && ) + , - ; < == > || }) then
+	{
+		print("57");
+	}
+	else ERROR;
+END;
+
+Proc G;
+	if(st ϵ First(! G)={ ! }) then
+	{
+		print("58");
+		EqT(!);
+		G();
+	}
+	else if(st ϵ First(id G')={ id }) then
+	{
+		print("59");
+		EqT(id);
+		G'();
+	}
+	else if(st ϵ First(( E ))={ ( }) then
+	{
+		print("60");
+		EqT(();
+		E();
+		EqT());
+	}
+	else if(st ϵ First(cte_ent)={ cte_ent }) then
+	{
+		print("61");
+		EqT(cte_ent);
+	}
+	else if(st ϵ First(CAD)={ CAD }) then
+	{
+		print("62");
+		EqT(CAD);
+	}
+	else if(st ϵ First(cte_bool)={ cte_bool }) then
+	{
+		print("63");
+		EqT(cte_bool);
+	}
+	else ERROR;
+END;
+
+Proc G';
+	if(st ϵ First(( L ))={ ( }) then
+	{
+		print("64");
+		EqT(();
+		L();
+		EqT();
+	}
+	else if(st ϵ Follow(G')={ != % && ) * + , - / ; < == > || }) then
+	{
+		print("65");
+	}
+	else ERROR;
+END;
+
+Proc D;
+	if(st ϵ First(case cte_ent : C D)={ case }) then
+	{
+		print("66");
+		EqT(case);
+		EqT(cte_ent);
+		EqT(:);
+		C();
+		D();
+	}
+	else if(st ϵ First(default : C)={ default }) then
+	{
+		print("67");
+		EqT(default);
+		EqT(:);
+		C();
+	}
+	else ERROR;
+END;
