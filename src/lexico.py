@@ -5,15 +5,15 @@ import re
 
 
 #Palabras reservadas
-reservadas = ['INT','BOOL','STRING','IF','DEFAULT','BREAK','RETURN','FUNCTION','VAR','SWITCH','CASE','PRINT','PROMT']
+reservadas = ['INT','BOOL','STRING','IF','DEFAULT','BREAK','RETURN','FUNCTION','VAR','SWITCH','CASE','PRINT','PROMT','WHILE']
 
 #Tokens
 tokens = reservadas + ['ID','cteent','ctebool','CAD','MAS','MENOS','MUL','MOD','DIV','LLAVA','LLAVC','PARA','PARC',
 						'CORA','CORC','DOSPUNTOS','FIN','SIG','OR','AND','NOT','ASIGR','ASIG','OPMAY','OPMEN',
-						'OPIG','COMMENT','PR']
+						'OPIG','OPDISTINTO','COMMENT','PR']
 
 #Tabla de palabras reservadas
-valorReservadas = {'INT': 1, 'BOOL': 2, 'STRING': 3, 'IF': 4, 'DEFAULT': 5, 'BREAK': 6, 'RETURN': 7, 'FUNCTION': 8, 'VAR': 9, 'SWITCH': 10, 'CASE': 11, 'PRINT': 12, 'PROMPT': 13, 'TRUE': 'true', 'FALSE':'false' }
+valorReservadas = {'INT': 1, 'BOOL': 2, 'STRING': 3, 'IF': 4, 'DEFAULT': 5, 'BREAK': 6, 'RETURN': 7, 'FUNCTION': 8, 'VAR': 9, 'SWITCH': 10, 'CASE': 11, 'PRINT': 12, 'PROMPT': 13, 'WHILE': 14, 'TRUE': 'true', 'FALSE':'false' }
 
 #Tabla de simbolos 1.0
 tablaDeSimbolos = {}
@@ -213,13 +213,14 @@ def main():
 	analizador.input(cadena)
 	ftokens = open("tokens.txt","w+")
 
-	while True:
-		tok = analizador.token()
+	tok = analizador.token()
+	while tok is not None:
 		if not tok :
 			print("Token erroneo:",tok)
 			break
 		print('<' + tok.type + ','+ str(tok.value) + '>')
 		ftokens.write('<' + tok.type + ','+ str(tok.value) + '>\n')
+		tok = analizador.token()
 
 	ftokens.close()
 

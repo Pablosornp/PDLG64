@@ -504,7 +504,7 @@ Proc G';
 		print("64");
 		EqT(();
 		L();
-		EqT();
+		EqT());
 	}
 	else if(st ϵ Follow(G')={ != % && ) * + , - / ; < == > || }) then
 	{
@@ -523,7 +523,7 @@ Proc D;
 		C();
 		D();
 	}
-	else if(st ϵ First(default : C)={ default }) then
+	else if(st ϵ ) then
 	{
 		print("67");
 		EqT(default);
