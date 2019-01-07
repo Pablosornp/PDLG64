@@ -15,7 +15,7 @@ class AnalizadorSinSem:
     def P(self):
         first1 = [("PR",6), ("ID",None), ("PR",4), ("PR",12), ("PR",13), ("PR",7), ("PR",10), ("PR",9), ("PR",14)]
         first2 = [("PR",8)]
-        first3 = [None]
+        first3 = [("$",None)]
 
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 1')
@@ -492,10 +492,13 @@ class AnalizadorSinSem:
             st1 = self.lexer.token()
             if (st1 is not None): #Cargamos el primer token
                 self.sigToken = (st1.type, st1.value)
-            else: self.sigToken = None
+                print(self.sigToken[0], self.sigToken[1])
+            else:
+                self.sigToken = ("$", None)
+                print("$")
         else:
             raise Exception("ERROR: sintaxis incorrecta")
-        print(self.sigToken[0], self.sigToken[1])
+
 
     #Funcion auxiliar tokenInFirst:
     def tokenInFirst(self,first):

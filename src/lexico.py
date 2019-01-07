@@ -10,7 +10,7 @@ reservadas = ['INT','BOOL','STRING','IF','DEFAULT','BREAK','RETURN','FUNCTION','
 #Tokens
 tokens = reservadas + ['ID','cteent','ctebool','CAD','MAS','MENOS','MUL','MOD','DIV','LLAVA','LLAVC','PARA','PARC',
 						'CORA','CORC','DOSPUNTOS','FIN','SIG','OR','AND','NOT','ASIGR','ASIG','OPMAY','OPMEN',
-						'OPIG','OPDISTINTO','COMMENT','PR']
+						'OPIG','OPDISTINTO','COMMENT1','COMMENT2','PR']
 
 #Tabla de palabras reservadas
 valorReservadas = {'INT': 1, 'BOOL': 2, 'STRING': 3, 'IF': 4, 'DEFAULT': 5, 'BREAK': 6, 'RETURN': 7, 'FUNCTION': 8, 'VAR': 9, 'SWITCH': 10, 'CASE': 11, 'PRINT': 12, 'PROMPT': 13, 'WHILE': 14, 'TRUE': 'true', 'FALSE':'false' }
@@ -22,6 +22,16 @@ tablaDeSimbolos = {}
 count = 1
 
 #Expresiones Regulares
+
+# Comment
+
+def t_COMMENT1(t):
+    r'(/\*(.|\n)*?\*/)|(//.*?(\n|$))'
+    pass
+
+def t_COMMENT2(t):
+    r'(//.*?(\n|$))'
+    pass
 
 def t_MAS(c):
 	r'\+'
@@ -153,10 +163,7 @@ def t_OPMEN(c):
 	return c
 
 #Funciones
-# Comment
-def t_COMMENT(t):
-    r'(/\*(.|\n)*?\*/)|(//.*?(\n|$))'
-    pass
+
 
 def t_ID(c):
 	r'[a-zA-Z_]+[a-zA-Z_0-9]*'

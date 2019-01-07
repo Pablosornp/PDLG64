@@ -1,5 +1,6 @@
 var int a;
 var int b;
+//c = divide (a, b);
 var int c;
 print ( 'Introduce el primer operando' );
 prompt (a);
@@ -11,5 +12,5 @@ prompt (b);
 	res = num1/num2;
 	return res;
 }
-c = divide (a, b);
- print (c);
+//c = divide (a, b);
+// print (c);
