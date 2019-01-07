@@ -25,30 +25,30 @@ count = 1
 
 def t_MAS(c):
 	r'\+'
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_MENOS(c):
 	r'-'
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_MUL(c):
 	r'\*'
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_DIV(c):
 	r'/'
-	c.value=""
+	c.value=None
 	return c
 
 def t_MOD(c):
 	r'%'
-	c.value=""
+	c.value=None
 	return c
 
 t_ignore = '\n\t '
@@ -56,100 +56,100 @@ t_ignore = '\n\t '
 
 def t_LLAVA(c):
 	r'\{'
-	c.value=""
+	c.value=None
 	return c
 
 def t_LLAVC(c):
 	r'\}'
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_PARA(c):
 	r'\('
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_PARC(c):
 	r'\)'
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_CORA(c):
 	r'\['
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_CORC(c):
 	r'\]'
-	c.value=""
+	c.value=None
 	return c
 
 def t_FIN(c):
 	r';'
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_SIG(c):
 	r','
-	c.value=""
+	c.value=None
 	return c
 
 def t_DOSPUNTOS(c):
 	r':'
-	c.value=""
+	c.value=None
 	return c
 
 def t_OR(c):
 	r'\|\|'
-	c.value=""
+	c.value=None
 	return c
 
 def t_AND(c):
 	r'&&'
-	c.value=""
+	c.value=None
 	return c
 
 def t_NOT(c):
 	r'!'
-	c.value=""
+	c.value=None
 	return c
 
 def t_ASIGR(c):
 	r'-='
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_OPIG(c):
 	r'=='
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_ASIG(c):
 	r'='
-	c.value=""
+	c.value=None
 	return c
 
 def t_OPDISTINTO(c):
 	r'!='
-	c.value=""
+	c.value=None
 	return c
 
 
 def t_OPMAY(c):
 	r'>'
-	c.value=""
+	c.value=None
 	return c
 
 def t_OPMEN(c):
 	r'<'
-	c.value=""
+	c.value=None
 	return c
 
 #Funciones
