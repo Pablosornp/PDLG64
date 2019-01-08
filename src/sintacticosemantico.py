@@ -59,7 +59,7 @@ class AnalizadorSinSem:
             self.C()
             self.equiparaToken(("LLAVC",None))
         elif (self.tokenInFirst(first4)):
-            elf.fichParse.write(' 7')
+            self.fichParse.write(' 7')
             self.equiparaToken(("PR",10))
             self.equiparaToken(("PARA",None))
             self.E()
@@ -244,7 +244,6 @@ class AnalizadorSinSem:
 
 
     def C(self):
-        print(self.sigToken[0], self.sigToken[1])
         first1 = [("PR",6),("ID",None),("PR",4),("PR",12),("PR",13),("PR",7),("PR",10),("PR",9),("PR",14)] #First(B C)={ break id if print prompt return switch var while }
         first2 = [("PR",11),("LLAVC",None),("PR",5)] #Follow(C)={ case } default }
         if (self.tokenInFirst(first1)):
@@ -257,7 +256,6 @@ class AnalizadorSinSem:
             raise Exception("ERROR: sintaxis incorrecta")
 
     def E(self):
-        print(self.sigToken[0], self.sigToken[1])
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None), ("cteent",None), ("ID",None)]#First(R E')={ ! ( cte_bool CAD cte_ent id }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 35')
@@ -488,7 +486,8 @@ class AnalizadorSinSem:
     #Funcion auxiliar equiparaToken:
     #Tiene como parametro de entrada una tupla (type,value) del token
     def equiparaToken(self,tok):
-        if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or tok[0] == self.sigToken[0] == "ID" or tok[0] == self.sigToken[0] == "CAD" :
+        #if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or tok[0] == self.sigToken[0] == "ID" or tok[0] == self.sigToken[0] == "CAD" :
+        if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or (tok[0] == self.sigToken[0] and self.sigToken[0] in ["CAD", "ID", "ctebool", "cteent"]) :
             st1 = self.lexer.token()
             if (st1 is not None): #Cargamos el primer token
                 self.sigToken = (st1.type, st1.value)
@@ -504,7 +503,7 @@ class AnalizadorSinSem:
     def tokenInFirst(self,first):
         if self.sigToken in first:
             return True
-        elif self.sigToken[0] in ["CAD", "ID"]:
+        elif self.sigToken[0] in ["CAD", "ID", "ctebool", "cteent"]:
             return (self.sigToken[0], None) in first
         else:
             return False
