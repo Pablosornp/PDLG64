@@ -5,9 +5,8 @@ import lexico
 class AnalizadorSinSem:
     #Constructor
     def __init__(self):
-        self.lexer = lexico.getJSlexer()
+        self.lexico = lexico.AnalizadorLex()
         self.sigToken = None
-        self.fichTokens = open("tokens.txt","w+")
         self.fichParse = open("parse.txt","w+")
         self.fichParse.write('Des')
 
@@ -184,9 +183,9 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 23')
             self.E()
-        elif (self.tokenInFirst(first2)):
-            self.fichParse.write(' 24')
             self.Q()
+        elif (self.tokenInFirst(first2)):
+            self.fichParse.write(' 24')        
         else:
             raise Exception("ERROR: sintaxis incorrecta")
 
@@ -488,9 +487,10 @@ class AnalizadorSinSem:
     def equiparaToken(self,tok):
         #if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or tok[0] == self.sigToken[0] == "ID" or tok[0] == self.sigToken[0] == "CAD" :
         if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or (tok[0] == self.sigToken[0] and self.sigToken[0] in ["CAD", "ID", "ctebool", "cteent"]) :
-            st1 = self.lexer.token()
+            st1 = self.lexico.lexer.token()
             if (st1 is not None): #Cargamos el primer token
                 self.sigToken = (st1.type, st1.value)
+                self.lexico.anyadirToken(st1)
                 print(self.sigToken[0], self.sigToken[1])
             else:
                 self.sigToken = ("$", None)
@@ -508,7 +508,8 @@ class AnalizadorSinSem:
         else:
             return False
 
-
+    def closeFiles(self):
+        self.fichParse.close()
 
 
 
@@ -518,13 +519,16 @@ def main():
     nombreFichero = input("Inserta nombre de fichero:")
     handle = open(nombreFichero)
     cadena = handle.read()
-    an.lexer.input(cadena)
-    st1 = an.lexer.token()
+    an.lexico.lexer.input(cadena)
+    st1 = an.lexico.lexer.token()
     if (st1 is not None): #Cargamos el primer token
         an.sigToken = (st1.type, st1.value)
+        print(an.sigToken[0], an.sigToken[1])
+        an.lexico.anyadirToken(st1)
         an.P()
     else:
         print("Fichero fuente vacío \n")
+    an.closeFiles()
 
 
 if __name__ == '__main__':

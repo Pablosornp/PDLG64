@@ -12,4 +12,3 @@ function imprime (string msg)
 var string textoAux;
 textoAux = texto;
 imprime (textoAux);
- //Prueba lexico DRACO (NO MODIFICAR)

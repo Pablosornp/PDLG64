@@ -1,7 +1,7 @@
+Terminales = { var id ; if ( ) while } { switch case break default int bool string return print
+		 	prompt function , || && == !=  < > -= ! = + - * / %  CAD : cteent ctebool }
 
 NoTerminales = { P B T S _S F H L Q A K X C E _E R _R U _U V _V W _W Z _Z G _G D }
-Terminales = {	var id ; if ( ) while { } switch case break default int bool string return print
-		 	prompt function , || && == !=  < > -= ! = + - * / %  CAD : cte_ent  cte_bool  }
 Axioma = P
 
 Producciones = {
@@ -53,7 +53,6 @@ V -> W _V
 _V -> > W _V
 _V -> < W _V
 _V -> lambda
-
 W -> Z _W
 _W -> + Z _W
 _W -> - Z _W
@@ -66,12 +65,11 @@ _Z -> lambda
 G -> ! G
 G -> id _G
 G -> ( E )
-G -> cte_ent
+G -> cteent
 G -> CAD
-G -> cte_bool
+G -> ctebool
 _G -> ( L )
 _G -> lambda
-D -> case cte_ent : C D
+D -> case cteent : C D
 D -> default : C
 }
-

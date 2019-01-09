@@ -1,7 +1,9 @@
 var int a;
-var bool b;
-b = false;
-function int hey (int a){
-	b = false;
-	return a;
-}
+var int b;
+a = 3;
+b = a;
+ if (a  <  b) b  -=  1;
+ a = a  +  b;
+print (a);
+print (b);
+//Prueba lexico DRACO (NO MODIFICAR)
