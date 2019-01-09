@@ -185,7 +185,7 @@ class AnalizadorSinSem:
             self.E()
             self.Q()
         elif (self.tokenInFirst(first2)):
-            self.fichParse.write(' 24')        
+            self.fichParse.write(' 24')
         else:
             raise Exception("ERROR: sintaxis incorrecta")
 
@@ -525,6 +525,7 @@ def main():
         an.sigToken = (st1.type, st1.value)
         print(an.sigToken[0], an.sigToken[1])
         an.lexico.anyadirToken(st1)
+        #PTE: Crear Tabla de Simbolos
         an.P()
     else:
         print("Fichero fuente vacío \n")
