@@ -4,7 +4,7 @@
 * <Bool, valor > (true)
 * <Mas, -> (+)
 * <Menos, -> (-)
-* <MUL, -> (*)
+* <MUL, -> (\*)
 * <DIV, -> (/)
 * <AND, -> (&&)
 * <LLAVA, -> ( { )
@@ -22,7 +22,7 @@
 * <OP_sal, - > (print (c))
 * <OP-en, - > (promt (c))
 * <OP_MAY, - > (>)
-* <OP_MEN, - > (<) 
+* <OP_MEN, - > (<)
 * <OP_IG, - > (==)
 * <OP_DISTINTO,- > (!=)
 * <Dos_puntos, - > (:)
@@ -39,5 +39,4 @@
 * <PR, 11 > (case)
 * <PR, 12 > (print)
 * <PR, 13 > (prompt)
-
-* <Id, ptr_ts>
+* <Id, pos>

@@ -30,7 +30,7 @@ class AnalizadorSinSem:
             raise Exception("ERROR: sintaxis incorrecta")
 
     def B(self):
-        first1 = [("PR",9)] #First(var A ;)={ var }
+        first1 = [("PR",9)] #First(var T id ;)={ var }
         first2 = [("PR",4)]  #First(if ( E ) S)={ if }
         first3 = [("PR",14)] #First(while ( E ) { C })={ while }
         first4 = [("PR",10)] #First(switch ( E ) { D })={ switch }
@@ -39,7 +39,8 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 4')
             self.equiparaToken(("PR",9))
-            self.A()
+            self.T()
+            self.equiparaToken(("ID",None))
             self.equiparaToken(("FIN",None))
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 5')
@@ -218,7 +219,7 @@ class AnalizadorSinSem:
 
     def K(self):
         first1 = [("SIG",None)] #First(, T id K)={ , }
-        first2 = [("PARC",None),("FIN",None)] #Follow(K)={ ) ; }
+        first2 = [("PARC",None)] #Follow(K)={ ) }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 29')
             self.equiparaToken(("SIG",None))
@@ -525,8 +526,9 @@ def main():
         an.sigToken = (st1.type, st1.value)
         print(an.sigToken[0], an.sigToken[1])
         an.lexico.anyadirToken(st1)
-        #PTE: Crear Tabla de Simbolos
+        #PTE: {TSG = newTS; despG=0}
         an.P()
+        #destruirTS()
     else:
         print("Fichero fuente vacío \n")
     an.closeFiles()

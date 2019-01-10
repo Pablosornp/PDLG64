@@ -4,17 +4,6 @@ Terminales = { var id ; if ( ) while } { switch case break default int bool stri
 NoTerminales = { P B T S _S F H L Q A K X C E _E R _R U _U V _V W _W Z _Z G _G D }
 Axioma = P
 
-Al no haber anidamiento no hacen falta una pila de tablas de símbolos.
-Nos servirá tener:
-	 - Una TSG (General) que se crea al principio y siempre esta
-	disponible.
-	-  Una TSL (Local) que se crea al comenzar una función y se
-	destruye al terminar.
-
-El Analizador Semántico se encarga de comprobar el flujo del control
-(por ejemplo, si el return aparece dentro de una función con el tipo adecuado
-o el break en un case, o el continue en una sentencia iterativa...)
-
 Producciones = {
 P -> B P
 P -> F P
@@ -57,8 +46,8 @@ R -> U _R
 _R -> && U _R
 _R -> lambda
 U -> V _U
-_U -> == V
-_U -> != V
+_U -> == V _U
+_U -> != V _U
 _U -> lambda
 V -> W _V
 _V -> > W _V

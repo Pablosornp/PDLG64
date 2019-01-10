@@ -8,7 +8,7 @@ Producciones = {
 P -> B P
 P -> F P
 P -> lambda
-B -> var A ;
+B -> var T id ;
 B -> if ( E ) S
 B -> while ( E ) { C }
 B -> switch ( E ) { D }

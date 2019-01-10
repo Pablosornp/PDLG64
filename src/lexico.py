@@ -192,7 +192,7 @@ def t_ENT(c):
 
 def t_CAD(t):
     r'(\"([^\\\n]|(\\(.|\n)))*?\")|(\'([^\\\n]|(\\(.|\n)))*?\')'
-    t.value = '\"' +str(t.value)+'\"'
+    t.value = '\"' +t.value +'\"'
     return t
 
 def t_error(t):

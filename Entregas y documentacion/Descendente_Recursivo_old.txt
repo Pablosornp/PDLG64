@@ -1,5 +1,6 @@
 print("Des ");
 
+
 Proc P;
 	if(st ϵ First(B P)={ break id if print prompt return switch var while }) then
 	{
@@ -21,12 +22,11 @@ Proc P;
 END;
 
 Proc B;
-	if(st ϵ First(var T id ;)={ var }) then
+	if(st ϵ First(var A ;)={ var }) then
 	{
 		print("4");
 		EqT(var);
-		T();
-		EqT(id);
+		A();
 		EqT(;);
 	}
 	else if(st ϵ First(if ( E ) S)={ if }) then
@@ -240,7 +240,7 @@ Proc K;
 		EqT(id);
 		K();
 	}
-	else if(st ϵ Follow(K)={ ) }) then
+	else if(st ϵ Follow(K)={ ) ; }) then
 	{
 		print("30");
 	}
