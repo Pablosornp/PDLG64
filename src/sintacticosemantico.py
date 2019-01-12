@@ -526,7 +526,7 @@ def main():
         an.sigToken = (st1.type, st1.value)
         print(an.sigToken[0], an.sigToken[1])
         an.lexico.anyadirToken(st1)
-        #PTE: {TSG = newTS; despG=0}
+        #{TSG = newTS(); despG=0}
         an.P()
         #destruirTS()
     else:
