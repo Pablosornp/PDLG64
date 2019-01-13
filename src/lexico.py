@@ -1,5 +1,6 @@
 import ply.lex as lex
 import re
+import tablaSimbolos
 
 
 
@@ -15,11 +16,9 @@ tokens = reservadas + ['ID','cteent','ctebool','CAD','MAS','MENOS','MUL','MOD','
 #Tabla de palabras reservadas
 valorReservadas = {'INT': 1, 'BOOL': 2, 'STRING': 3, 'IF': 4, 'DEFAULT': 5, 'BREAK': 6, 'RETURN': 7, 'FUNCTION': 8, 'VAR': 9, 'SWITCH': 10, 'CASE': 11, 'PRINT': 12, 'PROMPT': 13, 'WHILE': 14, 'TRUE': 'true', 'FALSE':'false' }
 
-#Tabla de simbolos 1.0
-tablaDeSimbolos = {}
+#Tabla de simbolos 2.0
+tablaDeSimbolos = None
 
-#Puntero a TS siguiente
-count = 1
 
 #Expresiones Regulares
 
@@ -175,13 +174,9 @@ def t_ID(c):
 		else:
 			c.type='PR'
 	else:
-		if tablaDeSimbolos.get(lexema, 0) == 0:
-			global count
-			tablaDeSimbolos[lexema]=count
-			count = count+1
-			c.value=tablaDeSimbolos[lexema]
-		else:
-			c.value=tablaDeSimbolos.get(lexema, 0)
+		pos = tablaDeSimbolos.insertaNuevoID(lexema)
+		#pos = tablaDeSimbolos.insertaNuevoIDLAXO(lexema)
+		c.value=pos
 	return c
 
 def t_ENT(c):
@@ -200,20 +195,19 @@ def t_error(t):
 	t.lexer.skip(1)
 
 
-def getJSlexer():
-	return lex.lex()
-
 class AnalizadorLex:
 	#Constructor
-    def __init__(self):
-        self.lexer = lex.lex()
-        self.ftokens = open("tokens.txt","w+")
+	def __init__(self, ts=None):
+		self.lexer = lex.lex()
+		self.ftokens = open("Salida\\tokens.txt","w+")
+		global tablaDeSimbolos
+		tablaDeSimbolos = ts
 
-    def anyadirToken(self, tok):
-	    self.ftokens.write('<' + tok.type + ','+ xstr(tok.value) + '>\n')
+	def anyadirToken(self, tok):
+		self.ftokens.write('<' + tok.type + ','+ xstr(tok.value) + '>\n')
 
-#Funcion auxiliar que imprime vacio si es None o el string argumento s
-#directamente en caso contrario
+#Funcion auxiliar que imprime vacio si es None o directamente el
+#string argumento s en caso contrario
 def xstr(s):
     if s is None:
         return ''
@@ -222,12 +216,14 @@ def xstr(s):
 #Funcion Main
 def main():
 	analizador = lex.lex()
+	global tablaDeSimbolos
+	tablaDeSimbolos = tablaSimbolos.TablaSimbolos()
 
 	nombreFichero = input("Inserta nombre de fichero:")
 	handle = open(nombreFichero)
 	cadena = handle.read()
 	analizador.input(cadena)
-	ftokens = open("tokens.txt","w+")
+	ftokens = open("Salida\\tokens.txt","w+")
 
 	tok = analizador.token()
 	while tok is not None:

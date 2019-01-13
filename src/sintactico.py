@@ -40,14 +40,9 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 4')
             self.equiparaToken(("PR",9))
-            Ttipo = self.T()
+            self.T()
             self.equiparaToken(("ID",None))
-            pos = self.actToken[1]
-            self.tablaSimbolos.insertaTipoTS(pos,Ttipo)
             self.equiparaToken(("FIN",None))
-            BtipoRet='tipo_vacio'
-
-
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 5')
             self.equiparaToken(("PR",4))
@@ -78,7 +73,6 @@ class AnalizadorSinSem:
             self.S()
         else:
             raise Exception("ERROR: sintaxis incorrecta")
-        return BtipoRet
 
     def T(self):
         first1 = [("PR",1)] #First(int)={ int }
@@ -88,18 +82,15 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 9')
             self.equiparaToken(("PR",1))
-            Ttipo='int'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 10')
             self.equiparaToken(("PR",2))
-            Ttipo='bool'
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 11')
             self.equiparaToken(("PR",3))
-            Ttipo='string'
         else:
             raise Exception("ERROR: sintaxis incorrecta")
-        return Ttipo
+
 
     def S(self):
         first1 = [("ID",None)] #First(id S')={ id }
@@ -496,10 +487,10 @@ class AnalizadorSinSem:
     #Funcion auxiliar equiparaToken:
     #Tiene como parametro de entrada una tupla (type,value) del token
     def equiparaToken(self,tok):
+        #if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or tok[0] == self.sigToken[0] == "ID" or tok[0] == self.sigToken[0] == "CAD" :
         if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or (tok[0] == self.sigToken[0] and self.sigToken[0] in ["CAD", "ID", "ctebool", "cteent"]) :
             st1 = self.lexico.lexer.token()
             if (st1 is not None): #Cargamos el primer token
-                self.actToken = self.sigToken
                 self.sigToken = (st1.type, st1.value)
                 self.lexico.anyadirToken(st1)
                 print(self.sigToken[0], self.sigToken[1])
@@ -524,6 +515,9 @@ class AnalizadorSinSem:
         self.lexico.ftokens.close()
         self.tablaSimbolos.fichTS.close()
 
+
+
+
 def main():
     an = AnalizadorSinSem()
     nombreFichero = input("Inserta nombre de fichero:")
@@ -533,12 +527,11 @@ def main():
     st1 = an.lexico.lexer.token()
     if (st1 is not None): #Cargamos el primer token
         an.sigToken = (st1.type, st1.value)
-        #print(an.sigToken[0], an.sigToken[1]) #Para ver tokens
+        print(an.sigToken[0], an.sigToken[1])
         an.lexico.anyadirToken(st1)
+        #{TSG = newTS(); despG=0}
         an.P()
-        #destruirTS() e imprimir
-        for id in an.tablaSimbolos.TSG['Identificadores']:
-            id.printID()
+        #destruirTS()
     else:
         print("Fichero fuente vacío \n")
     an.closeFiles()
