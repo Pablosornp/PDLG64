@@ -10,11 +10,12 @@ class TablaSimbolos:
         self.etiquetas = []
 
         self.TSactual = self.TSG
+        self.despActual = self.despTSG
         self.declaracion = False
 
     #Metodos
     def crearTSL(self, nombre):
-        self.TSL = {'Nombre':'TSL'+nombre,'Numero':self.contTS, 'Identificadores':[] }
+        self.TSL = {'Nombre':'TSL: '+nombre,'Numero':self.contTS, 'Identificadores':[] }
         self.despTSL = 0
 
     def destruirTSL(self):
@@ -23,18 +24,28 @@ class TablaSimbolos:
         self.despTSL = 0
         self.contTS = self.contTS + 1
 
+    def imprimirTSG(self):
+        print(self.TSG['Nombre'])
+        for id in self.TSG['Identificadores']:
+            id.printID()
+        print('\n')
+
     def imprimirTSL(self):
-        None
+        print(self.TSL['Nombre'])
+        for id in self.TSL['Identificadores']:
+            id.printID()
+        print('\n')
 
     #Metodo usado por el Lexico al encontrar un token
     def insertaNuevoID(self, newLexema):
-        pos = self.buscaID(newLexema) #PTE
-        if (pos is None):
-            newID = Identificador(lexema=newLexema)
-            self.TSactual['Identificadores'].append(newID)
+        (pos,tablaPos) = self.buscaID(newLexema) #PTE
+        if(self.declaracion is True):
+            if pos is None:
+                self.TSactual['Identificadores'].append(newID)
+                return self.buscaID(newLexema)
+        elif pos is None:
+            self.TSG['Identificadores'].append(newID)
             return self.buscaID(newLexema)
-        else:
-            raise Exception('ERROR: No puede declararse una variable dos veces en el mismo ambito')
 
     #Metodo laxo usado por el Lexico al encontrar un token (no chequea id repe)
     def insertaNuevoIDLAXO(self, newLexema):
@@ -47,16 +58,29 @@ class TablaSimbolos:
     #pos = buscaID(lexema)
     def buscaID(self,lexema):
         pos=None
+        tablaPos=None
         for idx, indentificador in enumerate(self.TSactual['Identificadores']):
             if indentificador.lexema == lexema:
                 pos = idx
+                tablaPos = self.TSactual
                 break
-        return pos
+        if (pos is None and self.TSactual is self.TSL):
+            for idx, indentificador in enumerate(self.TSG['Identificadores']):
+                if indentificador.lexema == lexema:
+                    pos = idx
+                    tablaPos = self.TSG
+                    break
+        return (pos,tablaPos)
+
 
 
     #Actualiza el tipo de un ID en TS
     def insertaTipoTS(self,pos,tipo):
         self.TSactual['Identificadores'][pos].insertaTipo(tipo)
+
+    #Modifica el flag de declaración
+    def modoDeclaracion(self,flag):
+        self.declaracion = flag
 
 
     def cerrarTS(self):
@@ -72,14 +96,24 @@ class Identificador:
         self.tipoRet = kwargs.get('tipoRet','-') #tipo
         self.etiq = kwargs.get('etiq','-') #string
 
+    def insertaInfo(self, *args, **kwargs):
+        self.tipo = kwargs.get('tipo','-') #tipo
+        self.desp = kwargs.get('desp','-') #int
+        self.params = kwargs.get('params','-') #Lista de tipos
+        self.tipoRet = kwargs.get('tipoRet','-') #tipo
+        self.etiq = kwargs.get('etiq','-') #string
+
     def printID(self):
         print('( lexema:' + self.lexema + ', tipo:' + self.tipo + ' )')
 
     def insertaTipo(self,tipo):
         self.tipo=tipo
 
+
     def insertaDesp(self,desp):
-        self.desp=desp
+        self.desp = desp
+        self.despActual = self.despActual + desp
+
 
 
 def main():
@@ -90,8 +124,10 @@ def main():
     ts.insertaTipoTS(pos,'int')
     pos = ts.buscaID('esCierto')
     ts.insertaTipoTS(pos,'bool')
-    for id in ts.TSG['Identificadores']:
-        id.printID()
+    ts.crearTSL('Funcion a')
+    ts.imprimirTSG()
+    ts.imprimirTSL()
+    ts.destruirTSL()
 
 if __name__ == '__main__':
     main()

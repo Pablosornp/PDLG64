@@ -4,9 +4,8 @@ import tablaSimbolos
 class AnalizadorSinSem:
     #Constructor
     def __init__(self):
-        self.tablaSimbolos = tablaSimbolos.TablaSimbolos()
-        self.lexico = lexico.AnalizadorLex(self.tablaSimbolos)
-        self.actToken = None
+        self.ts = tablaSimbolos.TablaSimbolos()
+        self.lx = lexico.AnalizadorLex(self.ts)
         self.sigToken = None
         self.fichParse = open("Salida\\parse.txt","w+")
         self.fichParse.write('Des')
@@ -28,7 +27,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 3')
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
     def B(self):
         first1 = [("PR",9)] #First(var T id ;)={ var }
@@ -40,11 +39,13 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 4')
             self.equiparaToken(("PR",9))
+            self.TS.declaracion = True
             Ttipo = self.T()
+            pos = self.sigToken[1]
             self.equiparaToken(("ID",None))
-            pos = self.actToken[1]
-            self.tablaSimbolos.insertaTipoTS(pos,Ttipo)
+            self.ts.insertaTipoTS(pos,Ttipo)
             self.equiparaToken(("FIN",None))
+            self.TS.declaracion = False
             BtipoRet='tipo_vacio'
 
 
@@ -77,7 +78,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 8')
             self.S()
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
         return BtipoRet
 
     def T(self):
@@ -98,7 +99,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("PR",3))
             Ttipo='string'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
         return Ttipo
 
     def S(self):
@@ -135,7 +136,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("PR",6))
             self.equiparaToken(("FIN",None))
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
     def S_(self):
         first1 = [("ASIG",None)] #First(= E ;)={ = }
@@ -145,27 +146,35 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 17')
             self.equiparaToken(("ASIG",None))
-            self.E();
+            eTipo=self.E();
             self.equiparaToken(("FIN",None))
+            s_Tipo=eTipo
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 18')
             self.equiparaToken(("ASIGR",None))
-            self.E();
+            eTipo=self.E();
             self.equiparaToken(("FIN",None))
+            if eTipo='int':
+                s_Tipo=eTipo
+            else:
+                s_Tipo='tipo_error'
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 19')
             self.equiparaToken(("PARA",None))
-            self.L()
+            lTipo=self.L()
             self.equiparaToken(("PARC",None))
             self.equiparaToken(("FIN",None))
+            s_Tipo=lTipo
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return s_Tipo
 
     def F(self):
         first1 = [("PR",8)] #First(function H id ( A ) { C })={ function }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 20')
             self.equiparaToken(("PR",8))
+            self.TS.declaracion = True
             self.H()
             self.equiparaToken(("ID",None))
             self.equiparaToken(("PARA",None))
@@ -175,7 +184,7 @@ class AnalizadorSinSem:
             self.C()
             self.equiparaToken(("LLAVC",None))
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
     def H(self):
         first1 = [("PR",1), ("PR",2), ("PR",3)] #First(T)={ int bool string }
@@ -186,7 +195,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 22')
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
     def L(self):
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None),("cteent",None),("ID",None)] #First(E Q)={ ! ( cte_bool CAD cte_ent id }
@@ -198,7 +207,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 24')
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
 
     def Q(self):
@@ -212,7 +221,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 26')
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
     def A(self):
         first1 = [("PR",1), ("PR",2), ("PR",3)] #First(T id K)={ int bool string }
@@ -225,7 +234,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 28')
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
     def K(self):
         first1 = [("SIG",None)] #First(, T id K)={ , }
@@ -239,7 +248,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 30')
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
     def X(self):
         first1 = [("NOT",None), ("PARA",None), ("ctebool",None), ("CAD",None), ("cteent",None), ("ID",None)] #First(E)={ ! ( cte_bool CAD cte_ent id }
@@ -250,7 +259,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 32')
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
 
     def C(self):
@@ -263,16 +272,23 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 34')
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
     def E(self):
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None), ("cteent",None), ("ID",None)]#First(R E')={ ! ( cte_bool CAD cte_ent id }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 35')
-            self.R()
-            self.E_()
+            rTipo=self.R()
+            e_Tipo=self.E_()
+            if e_Tipo == 'tipo_vacio':
+                eTipo=rTipo
+            elif e_Tipo == 'bool' and rTipo=='bool':
+                eTipo='bool'
+            else:
+                raise Exception("ERROR semantico: expresion incorrecta")
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return eTipo
 
     def E_(self):
         first1 = [("OR",None)] #First(|| R E')={ || }
@@ -280,22 +296,34 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 36')
             self.equiparaToken(("OR",None))
-            self.R()
-            self.E_()
+            rTipo=self.R()
+            e1_Tipo=self.E_()
+            if rTipo == 'bool' and e1_Tipo in ['bool', 'tipo_vacio']:
+                e_Tipo='bool'
+            else:
+                e_Tipo = 'tipo_error'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 37')
+            e_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return e_Tipo
 
 
     def R(self):
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None),("cteent",None),("ID",None)] #First(U R')={ ! ( cte_bool CAD cte_ent id }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 38')
-            self.U()
-            self.R_()
+            uTipo=self.U()
+            r_Tipo=self.R_()
+            if r_Tipo=='tipo_vacio':
+                rTipo=uTipo
+            elif r_Tipo =='bool' and uTipo == 'bool':
+                rTipo = 'bool'
+            else rTipo = 'tipo_error'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return rTipo
 
     def R_(self):
         first1 = [("AND",None)] #First(&& U R')
@@ -303,21 +331,34 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 39')
             self.equiparaToken(("AND",None))
-            self.U()
-            self.R_()
+            uTipo=self.U()
+            r1_Tipo=self.R_()
+            if uTipo=='bool' and r1_Tipo in ['bool', 'tipo_vacio']:
+                r_Tipo='bool'
+            else:
+                r_Tipo = 'tipo_error'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 40')
+            r_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return r_Tipo
 
     def U(self):
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None), ("cteent",None), ("ID",None)] #First(V U')={ ! ( cte_bool CAD cte_ent id }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 41')
-            self.V()
-            self.U_()
+            vTipo=self.V()
+            u_Tipo=self.U_()
+            if u_Tipo == 'tipo_vacio':
+                uTipo = vTipo
+            elif u_Tipo == 'bool' and vTipo=='int':
+                uTipo = 'bool'
+            else:
+                uTipo = 'tipo_error'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return uTipo
 
     def U_(self):
         first1 = [("OPIG",None)] #First(== V U')={ == }
@@ -326,26 +367,43 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 42')
             self.equiparaToken(("OPIG",None))
-            self.V()
-            self.U_()
+            vTipo=self.V()
+            u1_Tipo=self.U_()
+            if(vTipo == 'int' and u1_Tipo == 'tipo_vacio'):
+                u_Tipo='bool'
+            else:
+                u_Tipo='tipo_error'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 43')
             self.equiparaToken(("OPDISTINTO",None))
-            self.V()
-            self.U_()
+            vTipo=self.V()
+            u1_Tipo=self.U_()
+            if(vTipo == 'int' and u1_Tipo == 'tipo_vacio'):
+                u_Tipo='bool'
+            else:
+                u_Tipo='tipo_error'
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 44')
+            u_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return u_Tipo
 
     def V(self):
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None),("cteent",None),("ID",None)] #First(W V')={ ! ( cte_bool CAD cte_ent id }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 45')
-            self.W()
-            self.V_()
+            wTipo=self.W()
+            v_Tipo=self.V_()
+            if v_Tipo == 'tipo_vacio':
+                vTipo=w_Tipo
+            elif v_Tipo =='bool' and wTipo=='int':
+                vTipo='bool'
+            else:
+                vTipo='tipo_error'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return vTipo
 
     def V_(self):
         first1 = [("OPMAY",None)] #First(> W V')={ > }
@@ -354,26 +412,44 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 46')
             self.equiparaToken(("OPMAY",None))
-            self.W()
-            self.V_()
+            wTipo=self.W()
+            v1_Tipoself.V_()
+            if(wTipo == 'int' and v1_Tipo == 'tipo_vacio'):
+                v_Tipo='bool'
+            else:
+                v_Tipo='tipo_error'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 47')
             self.equiparaToken(("OPMEN",None))
-            self.W()
-            self.V_()
+            wTipo=self.W()
+            v1_Tipoself.V_()
+            if(wTipo == 'int' and v1_Tipo == 'tipo_vacio'):
+                v_Tipo='bool'
+            else:
+                v_Tipo='tipo_error'
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 48')
+            v_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return v_Tipo
 
     def W(self):
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None),("cteent",None),("ID",None)] #First(Z W')={ ! ( cte_bool CAD cte_ent id }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 49')
-            self.Z()
-            self.W_()
+            zTipo=self.Z()
+            w_Tipo=self.W_()
+            if w_Tipo == 'tipo_vacio':
+                wTipo = zTipo
+            elif zTipo == 'int' and w_Tipo == 'int':
+                wTipo='int'
+            else:
+                wTipo = 'tipo_error'
+
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return wTipo
 
 
     def W_(self):
@@ -383,26 +459,43 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 50')
             self.equiparaToken(("MAS",None))
-            self.Z()
-            self.W_()
+            zTipo = self.Z()
+            w1_Tipo = self.W_()
+            if(zTipo=='int' and w1_Tipo in ['int','tipo_vacio']):
+                w_Tipo = 'int'
+            else:
+                w_Tipo = 'tipo_error'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 51')
             self.equiparaToken(("MENOS",None))
-            self.Z()
-            self.W_()
+            zTipo = self.Z()
+            w1_Tipo = self.W_()
+            if(zTipo=='int' and w1_Tipo in ['int','tipo_vacio']):
+                w_Tipo = 'int'
+            else:
+                w_Tipo = 'tipo_error'
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 52')
+            w_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return w_Tipo
 
     def Z(self):
         first1 = [("NOT",None), ("PARA",None), ("ctebool",None), ("CAD",None), ("cteent",None), ("ID",None)] #First(G Z')={ ! ( cte_bool CAD cte_ent id }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 53')
-            self.G()
-            self.Z_()
+            gTipo = self.G()
+            z_Tipo = self.Z_()
+            if z_Tipo == 'tipo_vacio':
+                zTipo=gTipo
+            elif z_Tipo == 'int' and gTipo=='int':
+                zTipo='int'
+            else:
+                zTipo='tipo_error'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return zTipo
 
     def Z_(self):
         first1 = [("MUL",None)] #First(* G Z')={ * }
@@ -412,22 +505,36 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 54')
             self.equiparaToken(("MUL",None))
-            self.G()
-            self.Z_()
+            gTipo=self.G()
+            z1_Tipo=self.Z_()
+            if(gTipo=='int' and z1_Tipo in ['int','tipo_vacio ] ):
+                z_Tipo='int'
+            else:
+                z_Tipo='tipo_error'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 55')
             self.equiparaToken(("DIV",None))
-            self.G()
-            self.Z_()
+            gTipo=self.G()
+            z1_Tipo=self.Z_()
+            if(gTipo=='int' and z1_Tipo in ['int','tipo_vacio ] ):
+                z_Tipo='int'
+            else:
+                z_Tipo='tipo_error'
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 56')
             self.equiparaToken(("MOD",None))
-            self.G()
-            self.Z_()
+            gTipo=self.G()
+            z1_Tipo=self.Z_()
+            if(gTipo=='int' and z1_Tipo in ['int','tipo_vacio ] ):
+                z_Tipo='int'
+            else:
+                z_Tipo='tipo_error'
         elif (self.tokenInFirst(first4)):
             self.fichParse.write(' 57')
+            z_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return z_Tipo
 
     def G(self):
         first1 = [("NOT",None)] #First(! G)={ ! }
@@ -439,27 +546,43 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 58')
             self.equiparaToken(("NOT",None))
-            self.G()
+            g1_Tipo=self.G()
+            if g1_Tipo is 'bool':
+                gTipo = 'bool'
+            else gTipo = 'tipo_error'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 59')
+            pos = self.sigToken[1]
+            tipoID = buscaTipo(pos)
             self.equiparaToken(("ID",None))
-            self.G_()
+            g_Tipo=self.G_()
+            if g_Tipo=='tipo_vacio':
+                gTipo=tipoID
+            elif tipoID[0] is 'function' and tipoID[1][0] is g_Tipo:
+                gTipo=tipoID[1][1]
+            else:
+                gTipo='tipo_error'
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 60')
             self.equiparaToken(("PARA",None))
-            self.E()
+            eTipo=self.E()
             self.equiparaToken(("PARC",None))
+            gTipo=eTipo
         elif (self.tokenInFirst(first4)):
             self.fichParse.write(' 61')
             self.equiparaToken(("cteent",None))
+            gTipo='int'
         elif (self.tokenInFirst(first5)):
             self.fichParse.write(' 62')
             self.equiparaToken(("CAD",None))
+            gTipo='string'
         elif (self.tokenInFirst(first6)):
             self.fichParse.write(' 63')
             self.equiparaToken(("ctebool",None))
+            gTipo='bool'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return gTipo
 
     def G_(self):
         first1 = [("PARA",None)] # First(( L ))={ ( }
@@ -467,12 +590,15 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 64')
             self.equiparaToken(("PARA",None))
-            self.L()
+            lTipo=self.L()
             self.equiparaToken(("PARC",None))
+            g_Tipo=lTipo
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 65')
+            g_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return g_Tipo
 
     def D(self):
         first1 = [("PR",11)] #First(case cte_ent : C D)={ case }
@@ -490,24 +616,23 @@ class AnalizadorSinSem:
             self.equiparaToken(("DOSPUNTOS",None))
             self.C()
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
 
     #Funcion auxiliar equiparaToken:
     #Tiene como parametro de entrada una tupla (type,value) del token
     def equiparaToken(self,tok):
         if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or (tok[0] == self.sigToken[0] and self.sigToken[0] in ["CAD", "ID", "ctebool", "cteent"]) :
-            st1 = self.lexico.lexer.token()
+            st1 = self.lx.lexer.token()
             if (st1 is not None): #Cargamos el primer token
-                self.actToken = self.sigToken
                 self.sigToken = (st1.type, st1.value)
-                self.lexico.anyadirToken(st1)
-                print(self.sigToken[0], self.sigToken[1])
+                self.lx.anyadirToken(st1)
+                print(self.sigToken[0], self.sigToken[1]) #Para ver los tokens
             else:
                 self.sigToken = ("$", None)
                 print("$")
         else:
-            raise Exception("ERROR: sintaxis incorrecta")
+            raise Exception("ERROR sintactico: sintaxis incorrecta")
 
 
     #Funcion auxiliar tokenInFirst:
@@ -519,26 +644,28 @@ class AnalizadorSinSem:
         else:
             return False
 
+    #Cierra todos los ficheros de salida
     def closeFiles(self):
         self.fichParse.close()
-        self.lexico.ftokens.close()
-        self.tablaSimbolos.fichTS.close()
+        self.lx.ftokens.close()
+        self.ts.fichTS.close()
 
 def main():
     an = AnalizadorSinSem()
     nombreFichero = input("Inserta nombre de fichero:")
     handle = open(nombreFichero)
     cadena = handle.read()
-    an.lexico.lexer.input(cadena)
-    st1 = an.lexico.lexer.token()
-    if (st1 is not None): #Cargamos el primer token
+    an.lx.lexer.input(cadena)
+    st1 = an.lx.lexer.token() #Cargamos el primer token
+    if (st1 is not None):
         an.sigToken = (st1.type, st1.value)
-        #print(an.sigToken[0], an.sigToken[1]) #Para ver tokens
-        an.lexico.anyadirToken(st1)
+        #print(an.sigToken[0], an.sigToken[1]) #Para ver el primer token
+        an.lx.anyadirToken(st1)
         an.P()
-        #destruirTS() e imprimir
-        for id in an.tablaSimbolos.TSG['Identificadores']:
-            id.printID()
+        an.ts.imprimirTSG() #Temporal: se sustituira por el fichero de TS
+        #Posteriormente hay que hacer append del fichero con la TSG y el fichero
+        #con las TSL
+
     else:
         print("Fichero fuente vacío \n")
     an.closeFiles()

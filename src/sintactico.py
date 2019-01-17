@@ -4,8 +4,8 @@ import tablaSimbolos
 class AnalizadorSinSem:
     #Constructor
     def __init__(self):
-        self.tablaSimbolos = tablaSimbolos.TablaSimbolos()
-        self.lexico = lexico.AnalizadorLex(self.tablaSimbolos)
+        self.ts = tablaSimbolos.TablaSimbolos()
+        self.lx = lexico.AnalizadorLex(self.ts)
         self.actToken = None
         self.sigToken = None
         self.fichParse = open("Salida\\parse.txt","w+")
@@ -155,6 +155,7 @@ class AnalizadorSinSem:
     def F(self):
         first1 = [("PR",8)] #First(function H id ( A ) { C })={ function }
         if (self.tokenInFirst(first1)):
+
             self.fichParse.write(' 20')
             self.equiparaToken(("PR",8))
             self.H()
@@ -489,10 +490,10 @@ class AnalizadorSinSem:
     def equiparaToken(self,tok):
         #if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or tok[0] == self.sigToken[0] == "ID" or tok[0] == self.sigToken[0] == "CAD" :
         if (tok[0] == self.sigToken[0] and tok[1] == self.sigToken[1]) or (tok[0] == self.sigToken[0] and self.sigToken[0] in ["CAD", "ID", "ctebool", "cteent"]) :
-            st1 = self.lexico.lexer.token()
+            st1 = self.lx.lexer.token()
             if (st1 is not None): #Cargamos el primer token
                 self.sigToken = (st1.type, st1.value)
-                self.lexico.anyadirToken(st1)
+                self.lx.anyadirToken(st1)
                 print(self.sigToken[0], self.sigToken[1])
             else:
                 self.sigToken = ("$", None)
@@ -512,8 +513,8 @@ class AnalizadorSinSem:
 
     def closeFiles(self):
         self.fichParse.close()
-        self.lexico.ftokens.close()
-        self.tablaSimbolos.fichTS.close()
+        self.lx.ftokens.close()
+        self.ts.fichTS.close()
 
 
 
@@ -523,12 +524,12 @@ def main():
     nombreFichero = input("Inserta nombre de fichero:")
     handle = open(nombreFichero)
     cadena = handle.read()
-    an.lexico.lexer.input(cadena)
-    st1 = an.lexico.lexer.token()
+    an.lx.lexer.input(cadena)
+    st1 = an.lx.lexer.token()
     if (st1 is not None): #Cargamos el primer token
         an.sigToken = (st1.type, st1.value)
         print(an.sigToken[0], an.sigToken[1])
-        an.lexico.anyadirToken(st1)
+        an.lx.anyadirToken(st1)
         #{TSG = newTS(); despG=0}
         an.P()
         #destruirTS()
