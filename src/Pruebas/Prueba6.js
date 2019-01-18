@@ -11,3 +11,17 @@ function int divide (int num1, int num2)
  a = b  //asignacion a variable local
  return a;
 }
+
+def insertaNuevoID(self, newLexema):
+      posTS = self.buscaID(newLexema)
+      pos = self.leePosTS(posTS)
+      newID = Identificador(lexema=newLexema)
+      if(self.declaracion is True):
+          if pos is None or pos[1] is not self.TSactual:
+              self.TSactual['Identificadores'].append(newID)
+              return self.generaPosTS(self.TSactual,len(self.TSactual['Identificadores'])-1)
+          else:
+              raise Exception('Error Semantico: No pueden declararse dos ids de mismo nombre en el mismo ambito')
+      elif pos is None:
+          self.TSG['Identificadores'].append(newID)
+          return self.generaPosTS(self.TSG,len(self.TSG['Identificadores'])-1)

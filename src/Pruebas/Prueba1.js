@@ -4,7 +4,7 @@ var string texto;
 	print ( 'Introduce un texto' );
 	prompt (texto);
 }
-function imprime (string msg)
+function imprime (string msg, int p, int p1)
 {
 	print (msg);
 }

@@ -174,14 +174,14 @@ def t_ID(c):
 		else:
 			c.type='PR'
 	else:
-		pos = tablaDeSimbolos.insertaNuevoID(lexema)
-		#pos = tablaDeSimbolos.insertaNuevoIDLAXO(lexema)
-		c.value=pos
+		c.value=tablaDeSimbolos.insertaNuevoID(lexema)
 	return c
 
 def t_ENT(c):
 	r'\d+'
 	c.type='cteent'
+	if int(c.value) > 32767:
+		raise Exception('Error Lexico: Entero supera el tamaño máximo')
 	c.value=int(c.value)
 	return c
 

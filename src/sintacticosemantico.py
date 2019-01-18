@@ -39,13 +39,14 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 4')
             self.equiparaToken(("PR",9))
-            self.TS.declaracion = True
-            Ttipo = self.T()
+            self.ts.declaracion = True
+            tTipo = self.T()
             pos = self.sigToken[1]
             self.equiparaToken(("ID",None))
-            self.ts.insertaTipoTS(pos,Ttipo)
+            self.ts.insertaTipoTS(pos,('var',tTipo))
+            self.ts.insertaDespTS(pos,tTipo)
+            self.ts.declaracion = False
             self.equiparaToken(("FIN",None))
-            self.TS.declaracion = False
             BtipoRet='tipo_vacio'
 
 
@@ -79,7 +80,7 @@ class AnalizadorSinSem:
             self.S()
         else:
             raise Exception("ERROR sintactico: sintaxis incorrecta")
-        return BtipoRet
+        #return BtipoRet
 
     def T(self):
         first1 = [("PR",1)] #First(int)={ int }
@@ -154,7 +155,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("ASIGR",None))
             eTipo=self.E();
             self.equiparaToken(("FIN",None))
-            if eTipo='int':
+            if eTipo is'int':
                 s_Tipo=eTipo
             else:
                 s_Tipo='tipo_error'
@@ -174,15 +175,20 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 20')
             self.equiparaToken(("PR",8))
-            self.TS.declaracion = True
-            self.H()
+            self.ts.declaracion = True
+            hTipo=self.H()
+            pos = self.sigToken[1]
             self.equiparaToken(("ID",None))
+            self.ts.crearTSL(pos)
             self.equiparaToken(("PARA",None))
-            self.A()
+            aTipo=self.A()
             self.equiparaToken(("PARC",None))
+            self.ts.insertaTipoTS(pos,('function',(aTipo,hTipo)))
+            self.ts.declaracion = False
             self.equiparaToken(("LLAVA",None))
             self.C()
             self.equiparaToken(("LLAVC",None))
+            self.ts.destruirTSL()
         else:
             raise Exception("ERROR sintactico: sintaxis incorrecta")
 
@@ -191,23 +197,33 @@ class AnalizadorSinSem:
         first2 = [("ID",None)] #Follow(H)={ id }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 21')
-            self.T()
+            tTipo=self.T()
+            hTipo = tTipo
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 22')
+            hTipo='tipo_vacio'
         else:
             raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return hTipo
 
     def L(self):
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None),("cteent",None),("ID",None)] #First(E Q)={ ! ( cte_bool CAD cte_ent id }
         first2 = [("PARC",None)] #Follow(L)={ ) }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 23')
-            self.E()
-            self.Q()
+            eTipo=self.E()
+            qTipo=self.Q()
+            if qTipo is 'tipo_vacio':
+                lTipo=[eTipo]
+            else:
+                qTipo.insert(0,eTipo)
+                lTipo=qTipo
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 24')
+            lTipo='tipo_vacio'
         else:
             raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return lTipo
 
 
     def Q(self):
@@ -216,25 +232,42 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 25')
             self.equiparaToken(("SIG",None))
-            self.E()
-            self.Q()
+            eTipo=self.E()
+            q1Tipo=self.Q()
+            if qTipo is 'tipo_vacio':
+                qTipo = [eTipo]
+            else:
+                q1Tipo.insert(0,eTipo)
+                qTipo = q1Tipo
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 26')
+            qTipo='tipo_vacio'
         else:
             raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return qTipo
 
     def A(self):
         first1 = [("PR",1), ("PR",2), ("PR",3)] #First(T id K)={ int bool string }
         first2 = [("PARC",None),("FIN",None)] #Follow(A)={ ) ; }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 27')
-            self.T()
+            tTipo=self.T()
+            pos = self.sigToken[1]
             self.equiparaToken(("ID",None))
-            self.K()
+            self.ts.insertaTipoTS(pos, ('var',tTipo))
+            self.ts.insertaDespTS(pos, tTipo)
+            kTipo=self.K()
+            if(kTipo is 'tipo_vacio'):
+                aTipo = [tTipo]
+            else:
+                kTipo.insert(0,tTipo)
+                aTipo = kTipo
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 28')
+            aTipo=['tipo_vacio']
         else:
             raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return aTipo
 
     def K(self):
         first1 = [("SIG",None)] #First(, T id K)={ , }
@@ -242,24 +275,37 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 29')
             self.equiparaToken(("SIG",None))
-            self.T()
+            tTipo=self.T()
+            pos = self.sigToken[1]
             self.equiparaToken(("ID",None))
-            self.K()
+            self.ts.insertaTipoTS(pos,tTipo)
+            self.ts.insertaDespTS(pos, tTipo)
+            k1Tipo = self.K()
+            if(k1Tipo is 'tipo_vacio'):
+                kTipo = [tTipo]
+            else:
+                k1Tipo.insert(0,tTipo)
+                kTipo = k1Tipo
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 30')
+            kTipo='tipo_vacio'
         else:
             raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return kTipo
 
     def X(self):
         first1 = [("NOT",None), ("PARA",None), ("ctebool",None), ("CAD",None), ("cteent",None), ("ID",None)] #First(E)={ ! ( cte_bool CAD cte_ent id }
         first2 = [("FIN",None)] #Follow(X)={ ; }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 31')
-            self.E()
+            eTipo=self.E()
+            xTipo=eTipo
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 32')
+            xTipo='tipo_vacio'
         else:
             raise Exception("ERROR sintactico: sintaxis incorrecta")
+        return xTipo
 
 
     def C(self):
@@ -320,7 +366,8 @@ class AnalizadorSinSem:
                 rTipo=uTipo
             elif r_Tipo =='bool' and uTipo == 'bool':
                 rTipo = 'bool'
-            else rTipo = 'tipo_error'
+            else:
+                 rTipo = 'tipo_error'
         else:
             raise Exception("ERROR sintactico: sintaxis incorrecta")
         return rTipo
@@ -396,7 +443,7 @@ class AnalizadorSinSem:
             wTipo=self.W()
             v_Tipo=self.V_()
             if v_Tipo == 'tipo_vacio':
-                vTipo=w_Tipo
+                vTipo=wTipo
             elif v_Tipo =='bool' and wTipo=='int':
                 vTipo='bool'
             else:
@@ -507,7 +554,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("MUL",None))
             gTipo=self.G()
             z1_Tipo=self.Z_()
-            if(gTipo=='int' and z1_Tipo in ['int','tipo_vacio ] ):
+            if(gTipo is'int' and z1_Tipo in ['int','tipo_vacio' ] ):
                 z_Tipo='int'
             else:
                 z_Tipo='tipo_error'
@@ -516,7 +563,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("DIV",None))
             gTipo=self.G()
             z1_Tipo=self.Z_()
-            if(gTipo=='int' and z1_Tipo in ['int','tipo_vacio ] ):
+            if(gTipo is 'int' and z1_Tipo in ['int','tipo_vacio' ] ):
                 z_Tipo='int'
             else:
                 z_Tipo='tipo_error'
@@ -525,7 +572,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("MOD",None))
             gTipo=self.G()
             z1_Tipo=self.Z_()
-            if(gTipo=='int' and z1_Tipo in ['int','tipo_vacio ] ):
+            if(gTipo is 'int' and z1_Tipo in ['int','tipo_vacio' ] ):
                 z_Tipo='int'
             else:
                 z_Tipo='tipo_error'
@@ -549,19 +596,22 @@ class AnalizadorSinSem:
             g1_Tipo=self.G()
             if g1_Tipo is 'bool':
                 gTipo = 'bool'
-            else gTipo = 'tipo_error'
+            else:
+                gTipo = 'tipo_error'
+
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 59')
             pos = self.sigToken[1]
-            tipoID = buscaTipo(pos)
+            tipoID = self.ts.buscaTipo(pos)
             self.equiparaToken(("ID",None))
             g_Tipo=self.G_()
-            if g_Tipo=='tipo_vacio':
+            if g_Tipo is 'tipo_vacio':
                 gTipo=tipoID
             elif tipoID[0] is 'function' and tipoID[1][0] is g_Tipo:
                 gTipo=tipoID[1][1]
             else:
                 gTipo='tipo_error'
+
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 60')
             self.equiparaToken(("PARA",None))
@@ -627,7 +677,7 @@ class AnalizadorSinSem:
             if (st1 is not None): #Cargamos el primer token
                 self.sigToken = (st1.type, st1.value)
                 self.lx.anyadirToken(st1)
-                print(self.sigToken[0], self.sigToken[1]) #Para ver los tokens
+                #print(self.sigToken[0], self.sigToken[1]) #Para ver los tokens
             else:
                 self.sigToken = ("$", None)
                 print("$")

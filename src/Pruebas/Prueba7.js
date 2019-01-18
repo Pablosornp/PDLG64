@@ -1,1 +1,3 @@
- a = 2==2==2;
+var int a;
+var int b;
+var int c;
