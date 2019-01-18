@@ -2,9 +2,6 @@ import ply.lex as lex
 import re
 import tablaSimbolos
 
-
-
-
 #Palabras reservadas
 reservadas = ['INT','BOOL','STRING','IF','DEFAULT','BREAK','RETURN','FUNCTION','VAR','SWITCH','CASE','PRINT','PROMT','WHILE']
 
@@ -23,14 +20,17 @@ tablaDeSimbolos = None
 #Expresiones Regulares
 
 # Comment
-
 def t_COMMENT1(t):
-    r'(/\*(.|\n)*?\*/)|(//.*?(\n|$))'
-    pass
+	r'(/\*(.|\n)*?\*/)|(//.*?(\n|$))'
+	ncr = t.value.count("\n")
+	t.lexer.lineno += ncr
 
 def t_COMMENT2(t):
-    r'(//.*?(\n|$))'
-    pass
+	r'(//.*?(\n|$))'
+
+def t_newline(t):
+     r'\n+'
+     t.lexer.lineno += len(t.value)
 
 def t_ASIGR(c):
 	r'-='
@@ -70,8 +70,7 @@ def t_MOD(c):
 	c.value=None
 	return c
 
-t_ignore = '\n\t '
-
+t_ignore = '\t '
 
 def t_LLAVA(c):
 	r'\{'
@@ -181,7 +180,7 @@ def t_ENT(c):
 	r'\d+'
 	c.type='cteent'
 	if int(c.value) > 32767:
-		raise Exception('Error Lexico: Entero supera el tamaño máximo')
+		raise Exception('ERROR Lexico en linea '+ str(c.lexer.lineno) +': Entero supera el tamaño máximo')
 	c.value=int(c.value)
 	return c
 
@@ -230,9 +229,14 @@ def main():
 		if not tok :
 			print("Token erroneo:",tok)
 			break
-		print('<' + tok.type + ','+ xstr(tok.value) + '>')
+		print('<' + tok.type + ','+ xstr(tok.value) + ',linea:'+str(analizador.lineno)+'>')
 		ftokens.write('<' + tok.type + ','+ xstr(tok.value) + '>\n')
-		tok = analizador.token()
+		try:
+			tok = analizador.token()
+		except Exception as error:
+			print(repr(error))
+			ftokens.close()
+			return
 	ftokens.close()
 
 if __name__ == '__main__':

@@ -27,7 +27,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 3')
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
     def B(self):
         first1 = [("PR",9)] #First(var T id ;)={ var }
@@ -79,7 +79,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 8')
             self.S()
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         #return BtipoRet
 
     def T(self):
@@ -100,7 +100,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("PR",3))
             Ttipo='string'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return Ttipo
 
     def S(self):
@@ -137,7 +137,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("PR",6))
             self.equiparaToken(("FIN",None))
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
     def S_(self):
         first1 = [("ASIG",None)] #First(= E ;)={ = }
@@ -167,7 +167,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("FIN",None))
             s_Tipo=lTipo
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return s_Tipo
 
     def F(self):
@@ -190,7 +190,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("LLAVC",None))
             self.ts.destruirTSL()
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
     def H(self):
         first1 = [("PR",1), ("PR",2), ("PR",3)] #First(T)={ int bool string }
@@ -203,7 +203,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 22')
             hTipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return hTipo
 
     def L(self):
@@ -222,7 +222,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 24')
             lTipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return lTipo
 
 
@@ -243,7 +243,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 26')
             qTipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return qTipo
 
     def A(self):
@@ -266,7 +266,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 28')
             aTipo=['tipo_vacio']
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return aTipo
 
     def K(self):
@@ -290,7 +290,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 30')
             kTipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return kTipo
 
     def X(self):
@@ -304,7 +304,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 32')
             xTipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return xTipo
 
 
@@ -318,7 +318,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 34')
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
     def E(self):
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None), ("cteent",None), ("ID",None)]#First(R E')={ ! ( cte_bool CAD cte_ent id }
@@ -333,7 +333,7 @@ class AnalizadorSinSem:
             else:
                 raise Exception("ERROR semantico: expresion incorrecta")
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return eTipo
 
     def E_(self):
@@ -352,7 +352,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 37')
             e_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return e_Tipo
 
 
@@ -369,7 +369,7 @@ class AnalizadorSinSem:
             else:
                  rTipo = 'tipo_error'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return rTipo
 
     def R_(self):
@@ -388,7 +388,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 40')
             r_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return r_Tipo
 
     def U(self):
@@ -404,7 +404,7 @@ class AnalizadorSinSem:
             else:
                 uTipo = 'tipo_error'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return uTipo
 
     def U_(self):
@@ -433,7 +433,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 44')
             u_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return u_Tipo
 
     def V(self):
@@ -449,7 +449,7 @@ class AnalizadorSinSem:
             else:
                 vTipo='tipo_error'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return vTipo
 
     def V_(self):
@@ -478,7 +478,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 48')
             v_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return v_Tipo
 
     def W(self):
@@ -495,7 +495,7 @@ class AnalizadorSinSem:
                 wTipo = 'tipo_error'
 
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return wTipo
 
 
@@ -525,7 +525,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 52')
             w_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return w_Tipo
 
     def Z(self):
@@ -541,7 +541,7 @@ class AnalizadorSinSem:
             else:
                 zTipo='tipo_error'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return zTipo
 
     def Z_(self):
@@ -580,7 +580,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 57')
             z_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return z_Tipo
 
     def G(self):
@@ -631,7 +631,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("ctebool",None))
             gTipo='bool'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return gTipo
 
     def G_(self):
@@ -647,7 +647,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 65')
             g_Tipo='tipo_vacio'
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return g_Tipo
 
     def D(self):
@@ -666,7 +666,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("DOSPUNTOS",None))
             self.C()
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
 
     #Funcion auxiliar equiparaToken:
@@ -682,7 +682,7 @@ class AnalizadorSinSem:
                 self.sigToken = ("$", None)
                 print("$")
         else:
-            raise Exception("ERROR sintactico: sintaxis incorrecta")
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
 
     #Funcion auxiliar tokenInFirst:
@@ -706,20 +706,21 @@ def main():
     handle = open(nombreFichero)
     cadena = handle.read()
     an.lx.lexer.input(cadena)
-    st1 = an.lx.lexer.token() #Cargamos el primer token
-    if (st1 is not None):
-        an.sigToken = (st1.type, st1.value)
-        #print(an.sigToken[0], an.sigToken[1]) #Para ver el primer token
-        an.lx.anyadirToken(st1)
-        an.P()
-        an.ts.imprimirTSG() #Temporal: se sustituira por el fichero de TS
-        #Posteriormente hay que hacer append del fichero con la TSG y el fichero
-        #con las TSL
-
-    else:
-        print("Fichero fuente vacío \n")
-    an.closeFiles()
-
+    try:
+        st1 = an.lx.lexer.token() #Cargamos el primer token
+        if (st1 is not None):
+            an.sigToken = (st1.type, st1.value)
+            #print(an.sigToken[0], an.sigToken[1]) #Para ver el primer token
+            an.lx.anyadirToken(st1)
+            an.P()
+            an.ts.imprimirTSG() #Temporal: se sustituira por el fichero de TS
+        else:
+            print("Fichero fuente vacío \n")
+        an.closeFiles()
+    except Exception as error:
+        print(repr(error))
+        an.closeFiles()
+        return
 
 if __name__ == '__main__':
 	main()
