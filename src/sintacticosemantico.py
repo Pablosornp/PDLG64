@@ -111,8 +111,24 @@ class AnalizadorSinSem:
         first5 = [("PR",6)] #First( break ;)={ break }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 12')
+            posTS = self.sigToken[1]
+            tipoID=self.ts.buscaTipo(posTS)
             self.equiparaToken(("ID",None))
-            self.S_()
+            line=str(self.lx.lexer.lineno)
+            s_Tipo=self.S_()
+            if tipoID[0] is 'function': #pp1
+                if tipoID[1][0] == s_Tipo:
+                    sTipo='tipo_ok'
+                else:
+                    raise Exception('ERROR Semántico en linea '+ line +': llamada a función que pide '+str(tipoID[1][0])+ ' con parámetro incorrectos'+str(s_Tipo))
+            elif tipoID[0] is 'var':
+                if tipoID[1] is s_Tipo:
+                    sTipo='tipo_ok'
+                else:
+                    raise Exception('ERROR Semántico en linea '+ line +': tipo incorrecto en asignación')
+            else:
+                raise Exception('ERROR Semántico en linea '+ line +': error generico')
+
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 13')
             self.equiparaToken(("PR",7))
@@ -220,7 +236,7 @@ class AnalizadorSinSem:
                 lTipo=qTipo
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 24')
-            lTipo='tipo_vacio'
+            lTipo=['tipo_vacio']
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return lTipo
@@ -234,7 +250,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("SIG",None))
             eTipo=self.E()
             q1Tipo=self.Q()
-            if qTipo is 'tipo_vacio':
+            if q1Tipo is 'tipo_vacio':
                 qTipo = [eTipo]
             else:
                 q1Tipo.insert(0,eTipo)
@@ -278,8 +294,8 @@ class AnalizadorSinSem:
             tTipo=self.T()
             pos = self.sigToken[1]
             self.equiparaToken(("ID",None))
-            self.ts.insertaTipoTS(pos,tTipo)
-            self.ts.insertaDespTS(pos, tTipo)
+            self.ts.insertaTipoTS(pos,('var',tTipo))
+            self.ts.insertaDespTS(pos,tTipo)
             k1Tipo = self.K()
             if(k1Tipo is 'tipo_vacio'):
                 kTipo = [tTipo]
@@ -331,7 +347,7 @@ class AnalizadorSinSem:
             elif e_Tipo == 'bool' and rTipo=='bool':
                 eTipo='bool'
             else:
-                raise Exception("ERROR semantico: expresion incorrecta")
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return eTipo
@@ -347,7 +363,7 @@ class AnalizadorSinSem:
             if rTipo == 'bool' and e1_Tipo in ['bool', 'tipo_vacio']:
                 e_Tipo='bool'
             else:
-                e_Tipo = 'tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 37')
             e_Tipo='tipo_vacio'
@@ -367,7 +383,7 @@ class AnalizadorSinSem:
             elif r_Tipo =='bool' and uTipo == 'bool':
                 rTipo = 'bool'
             else:
-                 rTipo = 'tipo_error'
+                 raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return rTipo
@@ -383,7 +399,7 @@ class AnalizadorSinSem:
             if uTipo=='bool' and r1_Tipo in ['bool', 'tipo_vacio']:
                 r_Tipo='bool'
             else:
-                r_Tipo = 'tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 40')
             r_Tipo='tipo_vacio'
@@ -402,7 +418,7 @@ class AnalizadorSinSem:
             elif u_Tipo == 'bool' and vTipo=='int':
                 uTipo = 'bool'
             else:
-                uTipo = 'tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return uTipo
@@ -419,7 +435,7 @@ class AnalizadorSinSem:
             if(vTipo == 'int' and u1_Tipo == 'tipo_vacio'):
                 u_Tipo='bool'
             else:
-                u_Tipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 43')
             self.equiparaToken(("OPDISTINTO",None))
@@ -428,7 +444,7 @@ class AnalizadorSinSem:
             if(vTipo == 'int' and u1_Tipo == 'tipo_vacio'):
                 u_Tipo='bool'
             else:
-                u_Tipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 44')
             u_Tipo='tipo_vacio'
@@ -447,7 +463,7 @@ class AnalizadorSinSem:
             elif v_Tipo =='bool' and wTipo=='int':
                 vTipo='bool'
             else:
-                vTipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return vTipo
@@ -460,20 +476,20 @@ class AnalizadorSinSem:
             self.fichParse.write(' 46')
             self.equiparaToken(("OPMAY",None))
             wTipo=self.W()
-            v1_Tipoself.V_()
+            v1_Tipo=self.V_()
             if(wTipo == 'int' and v1_Tipo == 'tipo_vacio'):
                 v_Tipo='bool'
             else:
-                v_Tipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 47')
             self.equiparaToken(("OPMEN",None))
             wTipo=self.W()
-            v1_Tipoself.V_()
+            v1_Tipo=self.V_()
             if(wTipo == 'int' and v1_Tipo == 'tipo_vacio'):
                 v_Tipo='bool'
             else:
-                v_Tipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 48')
             v_Tipo='tipo_vacio'
@@ -492,7 +508,7 @@ class AnalizadorSinSem:
             elif zTipo == 'int' and w_Tipo == 'int':
                 wTipo='int'
             else:
-                wTipo = 'tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
 
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
@@ -511,7 +527,7 @@ class AnalizadorSinSem:
             if(zTipo=='int' and w1_Tipo in ['int','tipo_vacio']):
                 w_Tipo = 'int'
             else:
-                w_Tipo = 'tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 51')
             self.equiparaToken(("MENOS",None))
@@ -520,7 +536,7 @@ class AnalizadorSinSem:
             if(zTipo=='int' and w1_Tipo in ['int','tipo_vacio']):
                 w_Tipo = 'int'
             else:
-                w_Tipo = 'tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 52')
             w_Tipo='tipo_vacio'
@@ -539,7 +555,7 @@ class AnalizadorSinSem:
             elif z_Tipo == 'int' and gTipo=='int':
                 zTipo='int'
             else:
-                zTipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return zTipo
@@ -557,7 +573,7 @@ class AnalizadorSinSem:
             if(gTipo is'int' and z1_Tipo in ['int','tipo_vacio' ] ):
                 z_Tipo='int'
             else:
-                z_Tipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 55')
             self.equiparaToken(("DIV",None))
@@ -566,7 +582,7 @@ class AnalizadorSinSem:
             if(gTipo is 'int' and z1_Tipo in ['int','tipo_vacio' ] ):
                 z_Tipo='int'
             else:
-                z_Tipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 56')
             self.equiparaToken(("MOD",None))
@@ -575,7 +591,7 @@ class AnalizadorSinSem:
             if(gTipo is 'int' and z1_Tipo in ['int','tipo_vacio' ] ):
                 z_Tipo='int'
             else:
-                z_Tipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         elif (self.tokenInFirst(first4)):
             self.fichParse.write(' 57')
             z_Tipo='tipo_vacio'
@@ -597,7 +613,7 @@ class AnalizadorSinSem:
             if g1_Tipo is 'bool':
                 gTipo = 'bool'
             else:
-                gTipo = 'tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
 
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 59')
@@ -605,12 +621,16 @@ class AnalizadorSinSem:
             tipoID = self.ts.buscaTipo(pos)
             self.equiparaToken(("ID",None))
             g_Tipo=self.G_()
-            if g_Tipo is 'tipo_vacio':
-                gTipo=tipoID
-            elif tipoID[0] is 'function' and tipoID[1][0] is g_Tipo:
-                gTipo=tipoID[1][1]
+            if g_Tipo == 'tipo_vacio': #pp2
+                gTipo=tipoID[1]
+            elif tipoID[0] is 'function':
+                if tipoID[1][0] == g_Tipo:
+                    gTipo=tipoID[1][1]
+                else:
+                    raise Exception('ERROR Semántico en linea '+  str(self.lx.lexer.lineno) +': llamada a función que pide '+str(tipoID[1][0])+ ' con parámetro incorrectos'+str(g_Tipo))
+
             else:
-                gTipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta' +g_Tipo)
 
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 60')
@@ -718,6 +738,7 @@ def main():
             print("Fichero fuente vacío \n")
         an.closeFiles()
     except Exception as error:
+        an.ts.imprimirTSG()
         print(repr(error))
         an.closeFiles()
         return

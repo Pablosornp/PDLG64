@@ -1,7 +1,7 @@
 var bool boolean;
- function bool bisiesto (int a)
+function bool bisiesto (int a)
 {
-	return (a  %  4  >  0  &&  a  -  100 != 0  ||  a  *  400  <  0);
+	return (a  %  4  >  0  &&  a  -  102222 != 0  ||  a  *  400  <  0);
 }
  function int dias (int m, int a)
 {

@@ -2,8 +2,8 @@ class TablaSimbolos:
     #Constructor
     def __init__(self):
         self.fichTS = open("Salida\\tablaDeSimbolos.txt","w+")
+        self.TSG = {'Nombre':'TABLA PRINCIPAL #1', 'Identificadores':[] }
         self.contTS = 2 #La numero 1 será la TSG
-        self.TSG = {'Nombre':'TABLA PRINCIPAL','Numero':1, 'Identificadores':[] }
         self.despTSG = 0
         self.TSL = None
         self.despTSL = None
@@ -16,7 +16,7 @@ class TablaSimbolos:
     def crearTSL(self, posTS):
         nombre = self.buscaLexema(posTS)
         (tabla,pos)=self.leePosTS(posTS)
-        self.TSL = {'Nombre':'TSL: funcion '+nombre,'Numero':self.contTS, 'Identificadores':[] }
+        self.TSL = {'Nombre':'TSL #'+ str(self.contTS) +': funcion '+nombre,'Numero':self.contTS, 'Identificadores':[] }
         self.TSactual = self.TSL
         self.despTSL = 0
         tabla['Identificadores'][pos].insertaEtiq('eti_'+nombre+str(self.contTS))
@@ -29,7 +29,7 @@ class TablaSimbolos:
         self.TSactual = self.TSG
 
     def imprimirTSG(self):
-        print(self.TSG['Nombre'])
+        print(self.TSG['Nombre'] +': ')
         for id in self.TSG['Identificadores']:
             id.printID()
         print('\n')
@@ -57,7 +57,10 @@ class TablaSimbolos:
         else:
             if pos is None:
                 self.TSG['Identificadores'].append(newID)
-                return self.generaPosTS(self.TSG,len(self.TSG['Identificadores'])-1)
+                posTS = self.generaPosTS(self.TSG,len(self.TSG['Identificadores'])-1)
+                self.insertaTipoTS(posTS,('var','int'))
+                self.insertaDespTS(posTS,('int'))
+                return posTS
             elif pos[0] is self.TSactual:
                 return posTS
             elif pos[0] is self.TSG:
@@ -168,7 +171,7 @@ class Identificador:
                 tipoRes=tipoRes + ',' + tipo
             tipoRes = tipoRes + ', RET: ' + self.tipo[1][1]
             tipoRes = tipoRes + ')'
-        print('( lexema:' + self.lexema + ', tipo:' + tipoRes + ', etiq:' + self.etiq +' )')
+        print('( lexema:' + self.lexema + ', tipo:' + tipoRes + ', desp:' + str(self.desp) + ', etiq:' + self.etiq +' )')
 
     def insertaTipo(self,tipo):
         self.tipo=tipo
