@@ -2,8 +2,9 @@ class TablaSimbolos:
     #Constructor
     def __init__(self):
         self.fichTS = open("Salida\\tablaDeSimbolos.txt","w+")
-        self.TSG = {'Nombre':'TABLA PRINCIPAL #1', 'Identificadores':[] }
-        self.contTS = 2 #La numero 1 será la TSG
+        self.fichTS.close()
+        self.TSG = {'Nombre':'TABLA PRINCIPAL #1:', 'Identificadores':[] }
+        self.contTS = 2 #La numero 1 es la TSG
         self.despTSG = 0
         self.TSL = None
         self.despTSL = None
@@ -16,17 +17,19 @@ class TablaSimbolos:
     def crearTSL(self, posTS):
         nombre = self.buscaLexema(posTS)
         (tabla,pos)=self.leePosTS(posTS)
-        self.TSL = {'Nombre':'TSL #'+ str(self.contTS) +': funcion '+nombre,'Numero':self.contTS, 'Identificadores':[] }
+        self.TSL = {'Nombre':'TSL de la funcion '+'\''+nombre+'\' #'+ str(self.contTS)+':', 'Identificadores':[] }
         self.TSactual = self.TSL
         self.despTSL = 0
-        tabla['Identificadores'][pos].insertaEtiq('eti_'+nombre+str(self.contTS))
+        tabla['Identificadores'][pos].insertaEtiq('ETI'+nombre+str(self.contTS))
 
     def destruirTSL(self):
-        self.imprimirTSL()
-        self.TSL = {}
-        self.despTSL = None
-        self.contTS = self.contTS + 1
-        self.TSactual = self.TSG
+        if self.TSL is not None:
+            #self.imprimirTSL()
+            self.volcarTSL()
+            self.TSL = None
+            self.despTSL = None
+            self.contTS = self.contTS + 1
+            self.TSactual = self.TSG
 
     def imprimirTSG(self):
         print(self.TSG['Nombre'] +': ')
@@ -39,6 +42,43 @@ class TablaSimbolos:
         for id in self.TSL['Identificadores']:
             id.printID()
         print('\n')
+
+    def volcarTS(self):
+        self.destruirTSL()
+        self.fichTS = open("Salida\\tablaDeSimbolos.txt","r")
+        volcadoTSL = self.fichTS.read()
+        self.fichTS.close()
+        self.fichTS = open("Salida\\tablaDeSimbolos.txt","w")
+        self.fichTS.write(self.TSG['Nombre'] + '\n')
+        for id in self.TSG['Identificadores']:
+            self.fichTS.write('* LEXEMA: ' +'\''+id.lexema+'\'\n')
+            if id.tipo[0] is 'function':
+                self.fichTS.write('\t ATRIBUTOS: '+'\n\t +numParam: '+str(len(id.tipo[1][0]))+'\n\t +TipoRetorno: '+'\''+id.tipo[1][1]+'\'\n\t +EtiqFuncion: '+'\''+id.etiq+'\'\n')
+                cont=1
+                for arg in id.tipo[1][0]:
+                    self.fichTS.write('\t +TipoParam'+str(cont)+ ': '+'\''+arg+'\'\n')
+                    cont=cont+1
+            elif id.tipo[0] is 'var':
+                self.fichTS.write('\t ATRIBUTOS: '+'\n\t +despl: '+str(id.desp)+'\n\t +tipo: '+'\''+id.tipo[1]+'\'\n')
+            self.fichTS.write('\t-------------------------------\n')
+        self.fichTS.write('\n'+volcadoTSL)
+        self.fichTS.close()
+
+
+    def volcarTSL(self):
+        self.fichTS = open("Salida\\tablaDeSimbolos.txt","a+")
+        self.fichTS.write(self.TSL['Nombre'] + '\n')
+        for id in self.TSL['Identificadores']:
+            self.fichTS.write('* LEXEMA: ' +'\''+id.lexema+'\'')
+            if(id.tipo[0] is 'arg'):
+                    self.fichTS.write(' (parametro de entrada de la funcion)')
+            self.fichTS.write('\n\t ATRIBUTOS: '+'\n\t +despl: '+str(id.desp)+'\n\t +tipo: '+'\''+id.tipo[1]+'\'\n')
+            self.fichTS.write('\t-------------------------------\n')
+        self.fichTS.write('\n')
+        self.fichTS.close()
+
+
+
 
     #Metodo usado por el Lexico al encontrar un token. Devuelve la posicion si inserta o la posicion donde ya esta insertado
     def insertaNuevoID(self, newLexema):
@@ -151,25 +191,21 @@ class Identificador:
         self.lexema = kwargs.get('lexema','-') #string
         self.tipo = kwargs.get('tipo','-') #tipo
         self.desp = kwargs.get('desp','-') #int
-        self.params = kwargs.get('params','-') #Lista de tipos
-        self.tipoRet = kwargs.get('tipoRet','-') #tipo
         self.etiq = kwargs.get('etiq','-') #string
 
     def insertaInfo(self, *args, **kwargs):
         self.tipo = kwargs.get('tipo','-') #tipo
         self.desp = kwargs.get('desp','-') #int
-        self.params = kwargs.get('params','-') #Lista de tipos
-        self.tipoRet = kwargs.get('tipoRet','-') #tipo
         self.etiq = kwargs.get('etiq','-') #string
 
     def printID(self):
         tipoRes='('
-        if(self.tipo[0] is 'var'):
-            tipoRes = self.tipo[1]
+        if(self.tipo[0] in ['var','arg']):
+            tipoRes = self.tipo[0]+ ' '+self.tipo[1]
         elif (self.tipo[0] is 'function'):
             for tipo in self.tipo[1][0]:
-                tipoRes=tipoRes + ',' + tipo
-            tipoRes = tipoRes + ', RET: ' + self.tipo[1][1]
+                tipoRes=tipoRes + tipo + ','
+            tipoRes = tipoRes + ' RET: ' + self.tipo[1][1]
             tipoRes = tipoRes + ')'
         print('( lexema:' + self.lexema + ', tipo:' + tipoRes + ', desp:' + str(self.desp) + ', etiq:' + self.etiq +' )')
 
@@ -181,12 +217,6 @@ class Identificador:
 
     def insertaEtiq(self,etiq):
         self.etiq=etiq
-
-
-    def insertaDesp(self,desp):
-        self.desp = desp
-
-
 
 
 def main():

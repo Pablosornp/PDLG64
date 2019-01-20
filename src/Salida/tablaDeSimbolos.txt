@@ -1,0 +1,41 @@
+TABLA PRINCIPAL #1:
+* LEXEMA: 'b'
+	 ATRIBUTOS: 
+	 +despl: 0
+	 +tipo: 'bool'
+	-------------------------------
+* LEXEMA: 'bisiesto'
+	 ATRIBUTOS: 
+	 +numParam: 1
+	 +TipoRetorno: 'bool'
+	 +EtiqFuncion: 'ETIbisiesto2'
+	 +TipoParam1: 'int'
+	-------------------------------
+* LEXEMA: 'dias'
+	 ATRIBUTOS: 
+	 +numParam: 2
+	 +TipoRetorno: 'tipo_vacio'
+	 +EtiqFuncion: 'ETIdias3'
+	 +TipoParam1: 'int'
+	 +TipoParam2: 'int'
+	-------------------------------
+
+TSL de la funcion 'bisiesto' #2:
+* LEXEMA: 'a' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 0
+	 +tipo: 'int'
+	-------------------------------
+
+TSL de la funcion 'dias' #3:
+* LEXEMA: 'm' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 0
+	 +tipo: 'int'
+	-------------------------------
+* LEXEMA: 'a' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 2
+	 +tipo: 'int'
+	-------------------------------
+

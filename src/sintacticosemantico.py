@@ -130,11 +130,11 @@ class AnalizadorSinSem:
             if tipoID[0] is 'function': #pp1
                 if tipoID[1][0] != s_Tipo:
                     raise Exception('ERROR Semántico en linea '+ line +': llamada a función que pide '+str(tipoID[1][0])+ ' con parámetro incorrectos'+str(s_Tipo))
-            elif tipoID[0] is 'var':
+            elif tipoID[0] in ['var','arg']:
                 if type(s_Tipo)==list:
                     raise Exception('ERROR Semántico en linea '+ line +':la variable no es de tipo función y por lo tanto no puede hacerse una llamada.')
                 elif tipoID[1] != s_Tipo:
-                    raise Exception('ERROR Semántico en linea '+ line +': se intenta asignar a una variable de tipo '+str(tipoID[1])+ ' un valor de tipo '+str(s_Tipo ))
+                    raise Exception('ERROR Semántico en linea '+ line +': se intenta asignar a una variable de tipo '+str(tipoID[1])+ ' un valor de tipo '+str(s_Tipo))
             else:
                 raise Exception('ERROR Semántico en linea '+ line +': error generico')
             sTipoRet='tipo_vacio'
@@ -296,7 +296,7 @@ class AnalizadorSinSem:
             tTipo=self.T()
             pos = self.sigToken[1]
             self.equiparaToken(("ID",None))
-            self.ts.insertaTipoTS(pos, ('var',tTipo))
+            self.ts.insertaTipoTS(pos, ('arg',tTipo))
             self.ts.insertaDespTS(pos, tTipo)
             kTipo=self.K()
             if(kTipo is 'tipo_vacio'):
@@ -320,7 +320,7 @@ class AnalizadorSinSem:
             tTipo=self.T()
             pos = self.sigToken[1]
             self.equiparaToken(("ID",None))
-            self.ts.insertaTipoTS(pos,('var',tTipo))
+            self.ts.insertaTipoTS(pos,('arg',tTipo))
             self.ts.insertaDespTS(pos,tTipo)
             k1Tipo = self.K()
             if(k1Tipo is 'tipo_vacio'):
@@ -782,13 +782,14 @@ def main():
             #print(an.sigToken[0], an.sigToken[1]) #Para ver el primer token
             an.lx.anyadirToken(st1)
             an.P()
-            an.ts.imprimirTSG() #Temporal: se sustituira por el fichero de TS
+            an.ts.volcarTS()
         else:
             print("Fichero fuente vacío \n")
         an.closeFiles()
     except Exception as error:
-        an.ts.imprimirTSG()
-        print(repr(error))
+        #an.ts.imprimirTSG()
+        an.ts.volcarTS()
+        print('Error de compilacion:\n'+repr(error))
         an.closeFiles()
         return
 
