@@ -18,7 +18,7 @@ class AnalizadorSinSem:
 
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 1')
-            self.B()
+            self.B(False)
             self.P()
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 2')
@@ -29,7 +29,7 @@ class AnalizadorSinSem:
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
-    def B(self):
+    def B(self,bSwitch):
         first1 = [("PR",9)] #First(var T id ;)={ var }
         first2 = [("PR",4)]  #First(if ( E ) S)={ if }
         first3 = [("PR",14)] #First(while ( E ) { C })={ while }
@@ -47,40 +47,51 @@ class AnalizadorSinSem:
             self.ts.insertaDespTS(pos,tTipo)
             self.ts.declaracion = False
             self.equiparaToken(("FIN",None))
-            BtipoRet='tipo_vacio'
-
-
+            bTipoRet='tipo_vacio'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 5')
             self.equiparaToken(("PR",4))
             self.equiparaToken(("PARA",None))
-            self.E()
+            eTipo=self.E()
             self.equiparaToken(("PARC",None))
-            self.S()
+            if eTipo is not 'bool':
+                raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': La condición del \'if\' debe ser de tipo booleano y se ha introducido una expresión de tipo: '+str(eTipo)+'.')
+            sSwitch=bSwitch
+            sTipoRet=self.S(sSwitch)
+            bTipoRet=sTipoRet
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 6')
             self.equiparaToken(("PR",14))
             self.equiparaToken(("PARA",None))
-            self.E()
+            eTipo=self.E()
             self.equiparaToken(("PARC",None))
+            if eTipo is not 'bool':
+                raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': La condición del \'while\' debe ser de tipo booleano y se ha introducido una expresión de tipo: '+str(eTipo)+'.')
             self.equiparaToken(("LLAVA",None))
-            self.C()
+            bSwitch=cSwitch
+            cTipoRet=self.C(cSwitch)
             self.equiparaToken(("LLAVC",None))
+            bTipoRet=cTipoRet
         elif (self.tokenInFirst(first4)):
             self.fichParse.write(' 7')
             self.equiparaToken(("PR",10))
             self.equiparaToken(("PARA",None))
-            self.E()
+            eTipo=self.E()
             self.equiparaToken(("PARC",None))
+            if eTipo is not 'bool':
+                raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': La condición del \'switch\' debe ser de tipo booleano y se ha introducido una expresión de tipo: '+str(eTipo)+'.')
             self.equiparaToken(("LLAVA",None))
-            self.D()
+            dTipoRet=self.D()
             self.equiparaToken(("LLAVC",None))
+            bTipoRet=dTipoRet
         elif (self.tokenInFirst(first5)):
             self.fichParse.write(' 8')
-            self.S()
+            sSwitch=bSwitch
+            sTipoRet=self.S(sSwitch)
+            bTipoRet=sTipoRet
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
-        #return BtipoRet
+        return bTipoRet
 
     def T(self):
         first1 = [("PR",1)] #First(int)={ int }
@@ -90,20 +101,20 @@ class AnalizadorSinSem:
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 9')
             self.equiparaToken(("PR",1))
-            Ttipo='int'
+            tTipo='int'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 10')
             self.equiparaToken(("PR",2))
-            Ttipo='bool'
+            tTipo='bool'
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 11')
             self.equiparaToken(("PR",3))
-            Ttipo='string'
+            tTipo='string'
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
-        return Ttipo
+        return tTipo
 
-    def S(self):
+    def S(self,sSwitch):
         first1 = [("ID",None)] #First(id S')={ id }
         first2 = [("PR",7)] # First(return X ;)={ return }
         first3 = [("PR",12)] #First(print ( E ) ;)={ print }
@@ -117,44 +128,55 @@ class AnalizadorSinSem:
             line=str(self.lx.lexer.lineno)
             s_Tipo=self.S_()
             if tipoID[0] is 'function': #pp1
-                if tipoID[1][0] == s_Tipo:
-                    sTipo='tipo_ok'
-                else:
+                if tipoID[1][0] != s_Tipo:
                     raise Exception('ERROR Semántico en linea '+ line +': llamada a función que pide '+str(tipoID[1][0])+ ' con parámetro incorrectos'+str(s_Tipo))
             elif tipoID[0] is 'var':
-                if tipoID[1] is s_Tipo:
-                    sTipo='tipo_ok'
-                else:
-                    raise Exception('ERROR Semántico en linea '+ line +': tipo incorrecto en asignación')
+                if tipoID[1] is not s_Tipo:
+                    raise Exception('ERROR Semántico en linea '+ line +': se intenta asignar a una variable de tipo '+str(tipoID[1])+ ' un valor de tipo '+s_Tipo )
             else:
                 raise Exception('ERROR Semántico en linea '+ line +': error generico')
-
+            sTipoRet='tipo_vacio'
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 13')
             self.equiparaToken(("PR",7))
-            self.X()
+            xTipo=self.X()
+            sTipoRet=xTipo
             self.equiparaToken(("FIN",None))
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 14')
             self.equiparaToken(("PR",12))
             self.equiparaToken(("PARA",None))
-            self.E()
+            eTipo=self.E()
             self.equiparaToken(("PARC",None))
+            if eTipo not in['int','bool','string']:
+                raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': print() debe llamarse con un argumento de tipo entero, booleano o string.')
+            else:
+                sTipoRet='tipo_vacio'
             self.equiparaToken(("FIN",None))
         elif (self.tokenInFirst(first4)):
             self.fichParse.write(' 15')
             self.equiparaToken(("PR",13))
             self.equiparaToken(("PARA",None))
+            posTS = self.sigToken[1]
+            tipoID=self.ts.buscaTipo(posTS)
             self.equiparaToken(("ID",None))
             self.equiparaToken(("PARC",None))
+            if tipoID[1] not in['int','string']:
+                raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': prompt() debe llamarse con una variable de tipo entero o string como argumento y ha recibido una variable de tipo'+tipoID[1]+'.')
+            else:
+                sTipoRet='tipo_vacio'
             self.equiparaToken(("FIN",None))
         elif (self.tokenInFirst(first5)):
             self.fichParse.write(' 16')
             self.equiparaToken(("PR",6))
+            if sSwitch is False:
+                raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': break fuera de sentencia switch.')
+            else:
+                sTipoRet='tipo_vacio'
             self.equiparaToken(("FIN",None))
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
-
+        return sTipoRet
     def S_(self):
         first1 = [("ASIG",None)] #First(= E ;)={ = }
         first2 = [("ASIGR",None)] #First(-= E ;)={ -= }
@@ -202,7 +224,9 @@ class AnalizadorSinSem:
             self.ts.insertaTipoTS(pos,('function',(aTipo,hTipo)))
             self.ts.declaracion = False
             self.equiparaToken(("LLAVA",None))
-            self.C()
+            cTipoRet=self.C(False)
+            if cTipoRet != hTipo:
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': el tipo de retorno de la función declarado: '+hTipo+' no coincide con el tipo devuelto: '+cTipoRet+'.')
             self.equiparaToken(("LLAVC",None))
             self.ts.destruirTSL()
         else:
@@ -324,17 +348,29 @@ class AnalizadorSinSem:
         return xTipo
 
 
-    def C(self):
+    def C(self,cSwitch):
         first1 = [("PR",6),("ID",None),("PR",4),("PR",12),("PR",13),("PR",7),("PR",10),("PR",9),("PR",14)] #First(B C)={ break id if print prompt return switch var while }
         first2 = [("PR",11),("LLAVC",None),("PR",5)] #Follow(C)={ case } default }
         if (self.tokenInFirst(first1)):
             self.fichParse.write(' 33')
-            self.B()
-            self.C()
+            bSwitch=cSwitch
+            c1Switch=cSwitch
+            bTipoRet=self.B(bSwitch)
+            c1TipoRet=self.C(c1Switch)
+            if bTipoRet == c1TipoRet:
+                cTipoRet=c1TipoRet
+            elif bTipoRet is 'tipo_vacio':
+                cTipoRet=c1TipoRet
+            elif c1TipoRet is 'tipo_vacio':
+                cTipoRet=bTipoRet
+            else:
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': sentencias de retorno en funcion inconsistentes.')
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 34')
+            cTipoRet='tipo_vacio'
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+        return cTipoRet
 
     def E(self):
         first1 = [("NOT",None),("PARA",None),("ctebool",None),("CAD",None), ("cteent",None), ("ID",None)]#First(R E')={ ! ( cte_bool CAD cte_ent id }
@@ -678,16 +714,27 @@ class AnalizadorSinSem:
             self.equiparaToken(("PR",11))
             self.equiparaToken(("cteent",None))
             self.equiparaToken(("DOSPUNTOS",None))
-            self.C()
-            self.D()
+            cSwitch=True
+            cTipoRet=self.C(cSwitch)
+            d1TipoRet=self.D()
+            if cTipoRet == d1TipoRet:
+                dTipoRet=cTipoRet
+            elif cTipoRet is 'tipo_vacio':
+                dTipoRet=d1TipoRet
+            elif d1TipoRet is 'tipo_vacio':
+                dTipoRet=cTipoRet
+            else:
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': sentencias de retorno en funcion inconsistentes dentro de sentencia switch.')
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 67')
             self.equiparaToken(("PR",5))
             self.equiparaToken(("DOSPUNTOS",None))
-            self.C()
+            cSwitch=True
+            cTipoRet=self.C(cSwitch)
+            dTipoRet=cTipoRet
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
-
+        return dTipoRet
 
     #Funcion auxiliar equiparaToken:
     #Tiene como parametro de entrada una tupla (type,value) del token
@@ -702,7 +749,7 @@ class AnalizadorSinSem:
                 self.sigToken = ("$", None)
                 print("$")
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': token recibido distinto al esperado.')
 
 
     #Funcion auxiliar tokenInFirst:

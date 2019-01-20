@@ -137,12 +137,8 @@
 <CAD,"OK">
 <PARC,>
 <FIN,>
-<LLAVC,>
-<PR,9>
-<PR,3>
-<ID,15>
-<FIN,>
-<ID,14>
+<PR,4>
 <PARA,>
+<cteent,2>
 <PARC,>
-<FIN,>
+<PR,12>

@@ -1,5 +1,4 @@
-var int a;
-var bool b;
+var int a; var bool b;
 b = false && 2 == 2%2 || true && a > 34 + 3*a;
 var bool c;
 c = a  >  a;

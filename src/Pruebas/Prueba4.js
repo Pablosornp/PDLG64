@@ -20,6 +20,7 @@ var bool boolean;
 {
 
 	if (esFechaCorrecta(25, 10, 2018)) print ( 'OK' );
+  if (2) print ( 'OK' );
 }
  var string  A_A_A_ ;
 demo();
