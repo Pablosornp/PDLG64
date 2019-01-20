@@ -7,8 +7,8 @@ reservadas = ['INT','BOOL','STRING','IF','DEFAULT','BREAK','RETURN','FUNCTION','
 
 #Tokens
 tokens = reservadas + ['ID','cteent','ctebool','CAD','MAS','MENOS','MUL','MOD','DIV','LLAVA','LLAVC','PARA','PARC',
-						'CORA','CORC','DOSPUNTOS','FIN','SIG','OR','AND','NOT','ASIGR','ASIG','OPMAY','OPMEN',
-						'OPIG','OPDISTINTO','COMMENT1','COMMENT2','PR']
+						'DOSPUNTOS','FIN','SIG','OR','AND','NOT','ASIGR','ASIG','OPMAY','OPMEN',
+						'OPIG','OPDISTINTO','COMMENT','PR']
 
 #Tabla de palabras reservadas
 valorReservadas = {'INT': 1, 'BOOL': 2, 'STRING': 3, 'IF': 4, 'DEFAULT': 5, 'BREAK': 6, 'RETURN': 7, 'FUNCTION': 8, 'VAR': 9, 'SWITCH': 10, 'CASE': 11, 'PRINT': 12, 'PROMPT': 13, 'WHILE': 14, 'TRUE': 'true', 'FALSE':'false' }
@@ -20,13 +20,11 @@ tablaDeSimbolos = None
 #Expresiones Regulares
 
 # Comment
-def t_COMMENT1(t):
+def t_COMMENT(t):
 	r'(/\*(.|\n)*?\*/)|(//.*?(\n|$))'
 	ncr = t.value.count("\n")
 	t.lexer.lineno += ncr
 
-def t_COMMENT2(t):
-	r'(//.*?(\n|$))'
 
 def t_newline(t):
      r'\n+'
@@ -91,18 +89,6 @@ def t_PARA(c):
 
 def t_PARC(c):
 	r'\)'
-	c.value=None
-	return c
-
-
-def t_CORA(c):
-	r'\['
-	c.value=None
-	return c
-
-
-def t_CORC(c):
-	r'\]'
 	c.value=None
 	return c
 
@@ -190,9 +176,7 @@ def t_CAD(t):
     return t
 
 def t_error(t):
-	print ("caracter ilegal '%s'" % t.value[0])
-	t.lexer.skip(1)
-
+	raise Exception('ERROR Lexico en linea '+ str(t.lexer.lineno)+': token no permitido.')
 
 class AnalizadorLex:
 	#Constructor

@@ -5,7 +5,7 @@ ooooooooooooooooooooooooooo
 */
 //pepe
 
- function pideTexto ()
+ function pideTexto () 
 {
 	print ( 'Introduce un texto' );
 	prompt (texto);

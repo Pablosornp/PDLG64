@@ -68,7 +68,7 @@ class AnalizadorSinSem:
             if eTipo is not 'bool':
                 raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': La condición del \'while\' debe ser de tipo booleano y se ha introducido una expresión de tipo: '+str(eTipo)+'.')
             self.equiparaToken(("LLAVA",None))
-            bSwitch=cSwitch
+            cSwitch=bSwitch
             cTipoRet=self.C(cSwitch)
             self.equiparaToken(("LLAVC",None))
             bTipoRet=cTipoRet
@@ -78,7 +78,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("PARA",None))
             eTipo=self.E()
             self.equiparaToken(("PARC",None))
-            if eTipo is not 'bool':
+            if eTipo is not 'int':
                 raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': La condición del \'switch\' debe ser de tipo booleano y se ha introducido una expresión de tipo: '+str(eTipo)+'.')
             self.equiparaToken(("LLAVA",None))
             dTipoRet=self.D()
@@ -131,8 +131,10 @@ class AnalizadorSinSem:
                 if tipoID[1][0] != s_Tipo:
                     raise Exception('ERROR Semántico en linea '+ line +': llamada a función que pide '+str(tipoID[1][0])+ ' con parámetro incorrectos'+str(s_Tipo))
             elif tipoID[0] is 'var':
-                if tipoID[1] is not s_Tipo:
-                    raise Exception('ERROR Semántico en linea '+ line +': se intenta asignar a una variable de tipo '+str(tipoID[1])+ ' un valor de tipo '+s_Tipo )
+                if type(s_Tipo)==list:
+                    raise Exception('ERROR Semántico en linea '+ line +':la variable no es de tipo función y por lo tanto no puede hacerse una llamada.')
+                elif tipoID[1] != s_Tipo:
+                    raise Exception('ERROR Semántico en linea '+ line +': se intenta asignar a una variable de tipo '+str(tipoID[1])+ ' un valor de tipo '+str(s_Tipo ))
             else:
                 raise Exception('ERROR Semántico en linea '+ line +': error generico')
             sTipoRet='tipo_vacio'
