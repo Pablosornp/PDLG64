@@ -1,49 +1,27 @@
 TABLA PRINCIPAL #1:
-* LEXEMA: 'texto'
+* LEXEMA: 'b'
 	 ATRIBUTOS: 
 	 +despl: 0
-	 +tipo: 'string'
+	 +tipo: 'bool'
 	-------------------------------
-* LEXEMA: 'pideTexto'
+* LEXEMA: 'bisiesto'
 	 ATRIBUTOS: 
-	 +numParam: 0
-	 +TipoRetorno: 'string'
-	 +EtiqFuncion: 'ETIpideTexto2'
-	-------------------------------
-* LEXEMA: 'imprime'
-	 ATRIBUTOS: 
-	 +numParam: 3
-	 +TipoRetorno: 'tipo_vacio'
-	 +EtiqFuncion: 'ETIimprime3'
-	 +TipoParam1: 'string'
+	 +numParam: 1
+	 +TipoRetorno: 'bool'
+	 +EtiqFuncion: 'ETIbisiesto2'
+	 +TipoParam1: 'bool'
 	 +ModoParam1: 1
-	 +TipoParam2: 'int'
-	 +ModoParam2: 1
-	 +TipoParam3: 'int'
-	 +ModoParam3: 1
 	-------------------------------
-* LEXEMA: 'textoAux'
+* LEXEMA: 'c'
 	 ATRIBUTOS: 
-	 +despl: 130
-	 +tipo: 'string'
+	 +despl: 4
+	 +tipo: 'int'
 	-------------------------------
 
-TSL de la funcion 'pideTexto' #2:
-
-TSL de la funcion 'imprime' #3:
-* LEXEMA: 'msg' (parametro de entrada de la funcion)
+TSL de la funcion 'bisiesto' #2:
+* LEXEMA: 'a' (parametro de entrada de la funcion)
 	 ATRIBUTOS: 
 	 +despl: 0
-	 +tipo: 'string'
-	-------------------------------
-* LEXEMA: 'p' (parametro de entrada de la funcion)
-	 ATRIBUTOS: 
-	 +despl: 128
-	 +tipo: 'int'
-	-------------------------------
-* LEXEMA: 'p1' (parametro de entrada de la funcion)
-	 ATRIBUTOS: 
-	 +despl: 130
-	 +tipo: 'int'
+	 +tipo: 'bool'
 	-------------------------------
 

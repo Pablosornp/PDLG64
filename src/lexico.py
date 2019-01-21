@@ -49,6 +49,7 @@ mapTokToStr = {
 '(\'PR\', 11)' : 'case',
 '(\'PR\', 12)' : 'print',
 '(\'PR\', 13)' : 'prompt',
+'(\'PR\', 14)' : 'while',
 '(\'ID\', None)' :  'id'
 }
 

@@ -196,11 +196,11 @@ class AnalizadorSinSem:
             self.fichParse.write(' 18')
             self.equiparaToken(("ASIGR",None))
             eTipo=self.E();
-            self.equiparaToken(("FIN",None))
             if eTipo is'int':
                 s_Tipo=eTipo
             else:
                 raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': la sentencia de asignacion con resta solo admite operandos enteros y no de tipo '+eTipo+'.')
+            self.equiparaToken(("FIN",None))
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 19')
             self.equiparaToken(("PARA",None))
