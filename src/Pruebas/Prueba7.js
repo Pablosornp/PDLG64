@@ -5,7 +5,7 @@ function bool bisiesto (int a)
 	return (1  %  4  >  0  &&  1  -  1022 != 0  ||  1  *  400  <  0);
 }
 c=2+2+2+2+2+2+2+2+2+2+2+2+2+2+2+2;
-function int dias (,)
+function int dias (int m)
 {
 	switch (m)
 	{

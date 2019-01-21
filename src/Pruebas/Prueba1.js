@@ -1,15 +1,16 @@
-var string texto;/* comentariooooooooooooooooooooooooooo
+var int texto;/* comentariooooooooooooooooooooooooooo
 ooooooooooooooooooooooooooo
 
 
 */
 //pepe
-
- function pideTexto () 
+ function string pideTexto ()
 {
 	print ( 'Introduce un texto' );
 	prompt (texto);
+  return 'cad';
 }
+texto = pideTexto();
 function imprime (string msg, int p, int p1)
 {
 	print (msg);
@@ -17,5 +18,5 @@ function imprime (string msg, int p, int p1)
  pideTexto();
 var string textoAux;
 textoAux = textoAux;
-imprime (textoAux);
+//imprime (textoAux);
  //Prueba lexico DRACO (NO MODIFICAR)

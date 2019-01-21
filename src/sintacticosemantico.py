@@ -27,7 +27,7 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 3')
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
     def B(self,bSwitch):
         first1 = [("PR",9)] #First(var T id ;)={ var }
@@ -90,7 +90,7 @@ class AnalizadorSinSem:
             sTipoRet=self.S(sSwitch)
             bTipoRet=sTipoRet
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return bTipoRet
 
     def T(self):
@@ -111,7 +111,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("PR",3))
             tTipo='string'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Se espera un tipo basico del lenguaje y se ha recibido: \"' +lexico.tokToStr(self.sigToken)+'\".')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Se espera un tipo basico del lenguaje y se ha recibido: \"' +lexico.tokToStr(self.sigToken)+'\".')
         return tTipo
 
     def S(self,sSwitch):
@@ -179,7 +179,7 @@ class AnalizadorSinSem:
                 sTipoRet='tipo_vacio'
             self.equiparaToken(("FIN",None))
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return sTipoRet
     def S_(self):
         first1 = [("ASIG",None)] #First(= E ;)={ = }
@@ -209,7 +209,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("FIN",None))
             s_Tipo=lTipo
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return s_Tipo
 
     def F(self):
@@ -234,7 +234,7 @@ class AnalizadorSinSem:
             self.ts.destruirTSL()
             self.equiparaToken(("LLAVC",None))
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
     def H(self):
         first1 = [("PR",1), ("PR",2), ("PR",3)] #First(T)={ int bool string }
@@ -247,7 +247,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 22')
             hTipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. El tipo de retorno de una funcion debe ser un tipo basico o vacio y se ha recibido: \"' +lexico.tokToStr(self.sigToken)+'\".')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. El tipo de retorno de una funcion debe ser un tipo basico o vacio y se ha recibido: \"' +lexico.tokToStr(self.sigToken)+'\".')
         return hTipo
 
     def L(self):
@@ -266,7 +266,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 24')
             lTipo=['tipo_vacio']
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Error en llamada de funcion. ')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Error en llamada de funcion. ')
         return lTipo
 
 
@@ -287,7 +287,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 26')
             qTipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Error en llamada de funcion. ')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Error en llamada de funcion. ')
         return qTipo
 
     def A(self):
@@ -310,7 +310,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 28')
             aTipo=['tipo_vacio']
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Parametros formales de declaracion de funcion incorrectos.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Parametros formales de declaracion de funcion incorrectos.')
         return aTipo
 
     def K(self):
@@ -334,7 +334,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 30')
             kTipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Parametros formales de declaracion de funcion incorrectos.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta. Parametros formales de declaracion de funcion incorrectos.')
         return kTipo
 
     def X(self):
@@ -348,7 +348,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 32')
             xTipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
         return xTipo
 
 
@@ -373,7 +373,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 34')
             cTipoRet='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta.')
         return cTipoRet
 
     def E(self):
@@ -389,7 +389,7 @@ class AnalizadorSinSem:
             else:
                 raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return eTipo
 
     def E_(self):
@@ -408,7 +408,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 37')
             e_Tipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return e_Tipo
 
 
@@ -425,7 +425,7 @@ class AnalizadorSinSem:
             else:
                  raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return rTipo
 
     def R_(self):
@@ -444,7 +444,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 40')
             r_Tipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return r_Tipo
 
     def U(self):
@@ -460,7 +460,7 @@ class AnalizadorSinSem:
             else:
                 raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return uTipo
 
     def U_(self):
@@ -489,7 +489,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 44')
             u_Tipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return u_Tipo
 
     def V(self):
@@ -505,7 +505,7 @@ class AnalizadorSinSem:
             else:
                 raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return vTipo
 
     def V_(self):
@@ -534,7 +534,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 48')
             v_Tipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return v_Tipo
 
     def W(self):
@@ -551,7 +551,7 @@ class AnalizadorSinSem:
                 raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
 
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return wTipo
 
 
@@ -581,7 +581,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 52')
             w_Tipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return w_Tipo
 
     def Z(self):
@@ -597,7 +597,7 @@ class AnalizadorSinSem:
             else:
                 raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': expresion incorrecta')
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return zTipo
 
     def Z_(self):
@@ -636,7 +636,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 57')
             z_Tipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return z_Tipo
 
     def G(self):
@@ -691,7 +691,7 @@ class AnalizadorSinSem:
             self.equiparaToken(("ctebool",None))
             gTipo='bool'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return gTipo
 
     def G_(self):
@@ -707,7 +707,7 @@ class AnalizadorSinSem:
             self.fichParse.write(' 65')
             g_Tipo='tipo_vacio'
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta: Expresion mal construida.')
         return g_Tipo
 
     def D(self):
@@ -737,7 +737,7 @@ class AnalizadorSinSem:
             cTipoRet=self.C(cSwitch)
             dTipoRet=cTipoRet
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': sentencia case/default incorrecta.')
         return dTipoRet
 
     #Funcion auxiliar equiparaToken:
@@ -753,7 +753,7 @@ class AnalizadorSinSem:
                 self.sigToken = ("$", None)
                 print("$")
         else:
-            raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': token recibido \"'+lexico.tokToStr(self.sigToken) +'\" distinto al esperado \"'+lexico.tokToStr(tok)+'\".')
+            raise Exception('ERROR Sintactico en linea '+ str(self.lx.lexer.lineno) +': token recibido \"'+lexico.tokToStr(self.sigToken) +'\" distinto al esperado \"'+lexico.tokToStr(tok)+'\".')
 
     #Funcion auxiliar tokenInFirst:
     def tokenInFirst(self,first):
