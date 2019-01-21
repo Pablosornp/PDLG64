@@ -79,7 +79,7 @@ class AnalizadorSinSem:
             eTipo=self.E()
             self.equiparaToken(("PARC",None))
             if eTipo is not 'int':
-                raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': La condición del \'switch\' debe ser de tipo booleano y se ha introducido una expresión de tipo: '+str(eTipo)+'.')
+                raise Exception('ERROR Semántico en linea '+ str(self.lx.lexer.lineno) +': La condición del \'switch\' debe ser de tipo entero y se ha introducido una expresión de tipo: '+str(eTipo)+'.')
             self.equiparaToken(("LLAVA",None))
             dTipoRet=self.D()
             self.equiparaToken(("LLAVC",None))
@@ -141,6 +141,8 @@ class AnalizadorSinSem:
         elif (self.tokenInFirst(first2)):
             self.fichParse.write(' 13')
             self.equiparaToken(("PR",7))
+            if self.ts.TSactual is not self.ts.TSL:
+                raise Exception('ERROR Semántico en linea '+  str(self.lx.lexer.lineno) +': sentencia return fuera de funcion')
             xTipo=self.X()
             sTipoRet=xTipo
             self.equiparaToken(("FIN",None))
@@ -198,7 +200,7 @@ class AnalizadorSinSem:
             if eTipo is'int':
                 s_Tipo=eTipo
             else:
-                s_Tipo='tipo_error'
+                raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': la sentencia de asignacion con resta solo admite operandos enteros y no de tipo '+eTipo+'.')
         elif (self.tokenInFirst(first3)):
             self.fichParse.write(' 19')
             self.equiparaToken(("PARA",None))
@@ -229,8 +231,8 @@ class AnalizadorSinSem:
             cTipoRet=self.C(False)
             if cTipoRet != hTipo:
                 raise Exception('ERROR semantico en linea '+ str(self.lx.lexer.lineno) +': el tipo de retorno de la función declarado: '+hTipo+' no coincide con el tipo devuelto: '+cTipoRet+'.')
-            self.equiparaToken(("LLAVC",None))
             self.ts.destruirTSL()
+            self.equiparaToken(("LLAVC",None))
         else:
             raise Exception('ERROR Sintáctico en linea '+ str(self.lx.lexer.lineno) +': sintaxis incorrecta')
 
@@ -782,6 +784,7 @@ def main():
             #print(an.sigToken[0], an.sigToken[1]) #Para ver el primer token
             an.lx.anyadirToken(st1)
             an.P()
+            print('Compilación del fichero fuente \''+nombreFichero+'\' finalizada correctamente.\nLos ficheros de salida están en la carpeta \'.\\Salida\'.\n')
             an.ts.volcarTS()
         else:
             print("Fichero fuente vacío \n")

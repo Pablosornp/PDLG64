@@ -1,4 +1,4 @@
-import ply.lex as lex
+))import ply.lex as lex
 import re
 import tablaSimbolos
 
@@ -9,6 +9,48 @@ reservadas = ['INT','BOOL','STRING','IF','DEFAULT','BREAK','RETURN','FUNCTION','
 tokens = reservadas + ['ID','cteent','ctebool','CAD','MAS','MENOS','MUL','MOD','DIV','LLAVA','LLAVC','PARA','PARC',
 						'DOSPUNTOS','FIN','SIG','OR','AND','NOT','ASIGR','ASIG','OPMAY','OPMEN',
 						'OPIG','OPDISTINTO','COMMENT','PR']
+
+#Token - String:
+mapTokToStr = { '(cteent, None)': 'cte entera',
+(CAD, “lexema”)
+(ctebool, 1) (true)
+(ctebool, 0> (false)
+(MAS, -> (+)
+(MENOS, -> (-)
+(MUL, -> (*)
+(DIV, -> (/)
+(MOD, -> (%)
+(AND, -> (&&)
+(LLAVA, -> ( { )
+(LLAVC, -> ( } )
+(PARA, -> ( ( )
+(PARC, -> ( ) )
+(FIN, - > ( ; )
+(SIG, - > ( , )
+(OR, -> (||)
+(NOT, -> ( ! )
+(ASIGR, -> (-=)
+(ASIG, - > (=)
+(OPMAY, - > (>)
+(OPMEN, - > (()
+(OPIG, - > (==)
+(OPDISTINTO,- > (!=)
+(DOSPUNTOS, - > (:)
+(PR, 1 > (int)
+(PR, 2 > (bool)
+(PR, 3 > (string)
+(PR, 4 > (if)
+(PR, 5 > (default)
+(PR, 6 > (break)
+(PR, 7 > (return)
+(PR, 8 > (function)
+(PR, 9 > (var)
+(PR, 10 > (switch)
+(PR, 11 > (case)
+(PR, 12 > (print)
+(PR, 13 > (promt)
+(Id, pos_ts>  (siendo “pos_ts” la posicion que ocupa el id dentro de la tabla de simbolos)
+}
 
 #Tabla de palabras reservadas
 valorReservadas = {'INT': 1, 'BOOL': 2, 'STRING': 3, 'IF': 4, 'DEFAULT': 5, 'BREAK': 6, 'RETURN': 7, 'FUNCTION': 8, 'VAR': 9, 'SWITCH': 10, 'CASE': 11, 'PRINT': 12, 'PROMPT': 13, 'WHILE': 14, 'TRUE': 'true', 'FALSE':'false' }

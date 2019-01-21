@@ -1,4 +1,5 @@
 var bool boolean;
+boolean -= true;
 var string pepe;
 function bool bisiesto (int a)
 {

@@ -53,6 +53,8 @@ class TablaSimbolos:
         for id in self.TSG['Identificadores']:
             self.fichTS.write('* LEXEMA: ' +'\''+id.lexema+'\'\n')
             if id.tipo[0] is 'function':
+                if id.tipo[1][0] == ['tipo_vacio']:
+                    id.tipo = ('function', ([],id.tipo[1][1]))
                 self.fichTS.write('\t ATRIBUTOS: '+'\n\t +numParam: '+str(len(id.tipo[1][0]))+'\n\t +TipoRetorno: '+'\''+id.tipo[1][1]+'\'\n\t +EtiqFuncion: '+'\''+id.etiq+'\'\n')
                 cont=1
                 for arg in id.tipo[1][0]:

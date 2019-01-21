@@ -1,7 +1,7 @@
 var int contador;
 var bool esCierto;
-a=2
-;var string cadena;
+a=2;
+var string cadena;
 function int divide (int num1, string num2, int num3)
 {
  a = b; //variable no existente que se declarará como global y entera
