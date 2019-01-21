@@ -1,27 +1,66 @@
 TABLA PRINCIPAL #1:
-* LEXEMA: 'b'
+* LEXEMA: 'contador'
 	 ATRIBUTOS: 
 	 +despl: 0
+	 +tipo: 'int'
+	-------------------------------
+* LEXEMA: 'esCierto'
+	 ATRIBUTOS: 
+	 +despl: 2
 	 +tipo: 'bool'
 	-------------------------------
-* LEXEMA: 'bisiesto'
+* LEXEMA: 'a'
 	 ATRIBUTOS: 
-	 +numParam: 1
-	 +TipoRetorno: 'bool'
-	 +EtiqFuncion: 'ETIbisiesto2'
-	 +TipoParam1: 'bool'
-	 +ModoParam1: 1
+	 +despl: 6
+	 +tipo: 'int'
 	-------------------------------
-* LEXEMA: 'c'
+* LEXEMA: 'cadena'
 	 ATRIBUTOS: 
-	 +despl: 4
+	 +despl: 8
+	 +tipo: 'string'
+	-------------------------------
+* LEXEMA: 'divide'
+	 ATRIBUTOS: 
+	 +numParam: 3
+	 +TipoRetorno: 'int'
+	 +EtiqFuncion: 'ETIdivide2'
+	 +TipoParam1: 'int'
+	 +ModoParam1: 1
+	 +TipoParam2: 'string'
+	 +ModoParam2: 1
+	 +TipoParam3: 'int'
+	 +ModoParam3: 1
+	-------------------------------
+* LEXEMA: 'b'
+	 ATRIBUTOS: 
+	 +despl: 136
 	 +tipo: 'int'
 	-------------------------------
 
-TSL de la funcion 'bisiesto' #2:
-* LEXEMA: 'a' (parametro de entrada de la funcion)
+TSL de la funcion 'divide' #2:
+* LEXEMA: 'num1' (parametro de entrada de la funcion)
 	 ATRIBUTOS: 
 	 +despl: 0
-	 +tipo: 'bool'
+	 +tipo: 'int'
+	-------------------------------
+* LEXEMA: 'num2' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 2
+	 +tipo: 'string'
+	-------------------------------
+* LEXEMA: 'num3' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 130
+	 +tipo: 'int'
+	-------------------------------
+* LEXEMA: 'b'
+	 ATRIBUTOS: 
+	 +despl: 132
+	 +tipo: 'int'
+	-------------------------------
+* LEXEMA: 'a'
+	 ATRIBUTOS: 
+	 +despl: 134
+	 +tipo: 'int'
 	-------------------------------
 

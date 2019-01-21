@@ -50,7 +50,8 @@ mapTokToStr = {
 '(\'PR\', 12)' : 'print',
 '(\'PR\', 13)' : 'prompt',
 '(\'PR\', 14)' : 'while',
-'(\'ID\', None)' :  'id'
+'(\'ID\', None)' : 'id',
+'(\'$\', None)' : 'Fin de fichero'
 }
 
 def tokToStr(tok):
