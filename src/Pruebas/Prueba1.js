@@ -1,4 +1,4 @@
-var int texto;/* comentariooooooooooooooooooooooooooo
+var string texto;/* comentariooooooooooooooooooooooooooo
 ooooooooooooooooooooooooooo
 
 

@@ -59,6 +59,7 @@ class TablaSimbolos:
                 cont=1
                 for arg in id.tipo[1][0]:
                     self.fichTS.write('\t +TipoParam'+str(cont)+ ': '+'\''+arg+'\'\n')
+                    self.fichTS.write('\t +ModoParam'+str(cont)+ ': 1\n')
                     cont=cont+1
             elif id.tipo[0] is 'var':
                 self.fichTS.write('\t ATRIBUTOS: '+'\n\t +despl: '+str(id.desp)+'\n\t +tipo: '+'\''+id.tipo[1]+'\'\n')

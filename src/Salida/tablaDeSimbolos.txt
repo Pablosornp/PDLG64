@@ -2,7 +2,7 @@ TABLA PRINCIPAL #1:
 * LEXEMA: 'texto'
 	 ATRIBUTOS: 
 	 +despl: 0
-	 +tipo: 'int'
+	 +tipo: 'string'
 	-------------------------------
 * LEXEMA: 'pideTexto'
 	 ATRIBUTOS: 
@@ -10,6 +10,40 @@ TABLA PRINCIPAL #1:
 	 +TipoRetorno: 'string'
 	 +EtiqFuncion: 'ETIpideTexto2'
 	-------------------------------
+* LEXEMA: 'imprime'
+	 ATRIBUTOS: 
+	 +numParam: 3
+	 +TipoRetorno: 'tipo_vacio'
+	 +EtiqFuncion: 'ETIimprime3'
+	 +TipoParam1: 'string'
+	 +ModoParam1: 1
+	 +TipoParam2: 'int'
+	 +ModoParam2: 1
+	 +TipoParam3: 'int'
+	 +ModoParam3: 1
+	-------------------------------
+* LEXEMA: 'textoAux'
+	 ATRIBUTOS: 
+	 +despl: 130
+	 +tipo: 'string'
+	-------------------------------
 
 TSL de la funcion 'pideTexto' #2:
+
+TSL de la funcion 'imprime' #3:
+* LEXEMA: 'msg' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 0
+	 +tipo: 'string'
+	-------------------------------
+* LEXEMA: 'p' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 128
+	 +tipo: 'int'
+	-------------------------------
+* LEXEMA: 'p1' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 130
+	 +tipo: 'int'
+	-------------------------------
 
