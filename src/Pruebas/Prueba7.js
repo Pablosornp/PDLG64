@@ -5,7 +5,7 @@ function bool bisiesto (int a)
 	return (1  %  4  >  0  &&  1  -  1022 != 0  ||  1  *  400  <  0);
 }
 c=2+2+2+2+2+2+2+2+2+2+2+2+2+2+2+2;
-function dias (int m, int a)
+function int dias (,)
 {
 	switch (m)
 	{
@@ -16,8 +16,8 @@ function dias (int m, int a)
 		case 2: if (bisiesto (a)) a=1;
 		default: a=2;
 	}
-	return true;
-	b = bisiesto(2018);
+	return 2;
+	b = bisiesto(x);
 
 
 }

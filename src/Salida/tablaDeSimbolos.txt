@@ -14,4 +14,50 @@ TABLA PRINCIPAL #1:
 	 +despl: 6
 	 +tipo: 'int'
 	-------------------------------
+* LEXEMA: 'cadena'
+	 ATRIBUTOS: 
+	 +despl: 8
+	 +tipo: 'string'
+	-------------------------------
+* LEXEMA: 'divide'
+	 ATRIBUTOS: 
+	 +numParam: 3
+	 +TipoRetorno: 'int'
+	 +EtiqFuncion: 'ETIdivide2'
+	 +TipoParam1: 'int'
+	 +TipoParam2: 'string'
+	 +TipoParam3: 'int'
+	-------------------------------
+* LEXEMA: 'b'
+	 ATRIBUTOS: 
+	 +despl: 136
+	 +tipo: 'int'
+	-------------------------------
+
+TSL de la funcion 'divide' #2:
+* LEXEMA: 'num1' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 0
+	 +tipo: 'int'
+	-------------------------------
+* LEXEMA: 'num2' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 2
+	 +tipo: 'string'
+	-------------------------------
+* LEXEMA: 'num3' (parametro de entrada de la funcion)
+	 ATRIBUTOS: 
+	 +despl: 130
+	 +tipo: 'int'
+	-------------------------------
+* LEXEMA: 'b'
+	 ATRIBUTOS: 
+	 +despl: 132
+	 +tipo: 'int'
+	-------------------------------
+* LEXEMA: 'a'
+	 ATRIBUTOS: 
+	 +despl: 134
+	 +tipo: 'bool'
+	-------------------------------
 
