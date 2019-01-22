@@ -8,7 +8,7 @@ function int divide (int num1 ,string num2, int num3)
  var int b; //declaracion de variable local
  b=a; //b coge el valor de la variable global
  var int a; //declaracion de variable local de mismo nombre de la global que hace que esta ultima no sea ya accesible
-
+ if (a == 3) a = 3;
  return a;
 
 divide(1,'a',3);
